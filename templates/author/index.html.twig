@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage author{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Author</li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Manage authors</div>
+        <div class="card-body">
+            <div class="form-group">
+                <form action="{{path('search_author')}}" method="POST">
+                    <input class="form-control" type="search" name="searchContent" required placeholder ="Search author by name or stage name...">
+                </form>
+            </div>
+            <a href = "{{ path('add_author') }}">
+                <button class="btn btn-primary"><i class="fa fa-plus"></i><span>  Add</span></button>
+            </a>
+            {% if authors != null %}
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            Author name&nbsp;
+                            <a style="text-decoration: none;" href="{{ path('sort_author_by_fullname_asc') }}"><i class="fa fa-arrow-up"></i></a>&nbsp;
+                            <a style="text-decoration: none;" href="{{ path('sort_author_by_fullname_desc') }}"><i class="fa fa-arrow-down"></i></a>
+                        </th>
+                        <th>
+                            Author stage name&nbsp;
+                            <a style="text-decoration: none;" href="{{ path('sort_author_by_stage_name_asc') }}"><i class="fa fa-arrow-up"></i></a>&nbsp;
+                            <a style="text-decoration: none;" href="{{ path('sort_author_by_stage_name_desc') }}"><i class="fa fa-arrow-down"></i></a>
+                        </th>
+                        <th>Create At</th>
+                        <th>Update At</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Author name</th>
+                        <th>Author stage name</th>
+                        <th>Create At</th>
+                        <th>Update At</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for author in authors %}
+                        <tr>
+                            <td> {{ author.AuthorFullName }}</td>
+                            <td> {{ author.AuthorStageName }}</td>
+                            <td> {{ author.CreateAt ? author.CreateAt|date('d-m-Y') : '' }}</td>
+                            <td> {{ author.UpdateAt ? author.UpdateAt|date('d-m-Y') : '' }}</td>
+                            <td style="text-align: center;">
+                                <a href="{{ path('show_author', {'id': author.id}) }}" style="text-decoration: none;" title="View detail"><i class="fa fa-eye"></i></a>
+                                &nbsp;&nbsp;
+                                <a href="{{ path('update_author', {'id': author.id}) }}" style="text-decoration: none;" title="Edit"><i class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p>No author found</p>
+            {% endif %}
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+{% endblock %}

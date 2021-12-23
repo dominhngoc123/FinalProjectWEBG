@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('author') }}">Author</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Detail
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    <div class="container col-md-8 mt-3 mb-3 text-center">
+        <table class="table table-responsive-md mt-3">
+            <thead>
+            <tr>
+                <th>Author Name</th>
+                <th>Author Stage Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Create At</th>
+                <th>Action</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td> {{ author.AuthorFullName }} </td>
+                <td> {{ author.AuthorStageName }} </td>
+                <td> {{ author.AuthorImage }} </td>
+                <td> {{ author.AuthorDescription }} </td>
+                <td> {{ author.CreateAt ? author.CreateAt|date('d-m-Y') : '' }} </td>
+                <td>
+                    <a href = "{{ path('update_author', {'id' : author.id }) }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('delete_author', {'id' : author.id }) }}"
+                       onclick = "return confirm('Do you want to delete author {{ author.AuthorFullName}} ?')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

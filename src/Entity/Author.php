@@ -54,6 +54,16 @@ class Author
      */
     private $authorBooks;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AuthorDescription;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AuthorImage;
+
     public function __construct()
     {
         $this->authorBooks = new ArrayCollection();
@@ -164,5 +174,31 @@ class Author
         }
 
         return $this;
+    }
+
+    public function getAuthorDescription(): ?string
+    {
+        return $this->AuthorDescription;
+    }
+
+    public function setAuthorDescription(?string $AuthorDescription): self
+    {
+        $this->AuthorDescription = $AuthorDescription;
+
+        return $this;
+    }
+
+    public function getAuthorImage()
+    {
+        return $this->AuthorImage;
+    }
+
+    public function setAuthorImage($AuthorImage)
+    {
+        if ($AuthorImage != null)
+        {
+            $this->AuthorImage = $AuthorImage;
+            return $this;
+        }
     }
 }

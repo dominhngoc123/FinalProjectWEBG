@@ -19,25 +19,23 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-    // /**
-    //  * @return Author[] Returns an array of Author objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    /  * @return Author[] Returns an array of Author objects
+    /  */
+    public function findByAuthorNameOrStageName($value)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('author')
+            ->andWhere('author.AuthorFullName LIKE :val')
+            ->orWhere('author.AuthorStageName LIKE :val')
+            ->setParameter('val', '%'. $value . '%')
+            ->orderBy('author.id', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
-    public function findOneBySomeField($value): ?Author
+    public function findOneBySomeField($value): ?AuthorBook
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')
@@ -47,4 +45,48 @@ class AuthorRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    /  * @return Author[] Returns an array of Author based on FullName objects asc
+    /  */
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('author')
+            ->orderBy('author.AuthorFullName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+    /  * @return Author[] Returns an array of Author objects based on FullName desc
+    /  */
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('author')
+            ->orderBy('author.AuthorFullName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+    /  * @return Author[] Returns an array of Author based on StageName objects asc
+    /  */
+    public function sortByStageNameAsc()
+    {
+        return $this->createQueryBuilder('author')
+            ->orderBy('author.AuthorStageName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+    /  * @return Author[] Returns an array of Author based on StageName objects desc
+    /  */
+    public function sortByStageNameDesc()
+    {
+        return $this->createQueryBuilder('author')
+            ->orderBy('author.AuthorStageName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
