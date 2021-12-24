@@ -44,6 +44,7 @@ class AuthorController extends AbstractController
             {
                 $tmpName = uniqid();
                 $tmpExtension = $img->guessExtension();
+                //Thêm phần kiểm tra extension
                 $imageName = $tmpName . '.' . $tmpExtension;
                 try {
                     $img->move(
@@ -64,6 +65,7 @@ class AuthorController extends AbstractController
             $author->setCreateBy("Đỗ Minh Ngọc");
             $manager->persist($author);
             $manager->flush();
+            $this->addFlash('success', 'Create author success');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('author/add.html.twig', [
@@ -80,10 +82,31 @@ class AuthorController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            $img = $author->getAuthorImage();
+            if ($img != null)
+            {
+                $tmpName = uniqid();
+                $tmpExtension = $img->guessExtension();
+                //Thêm phần kiểm tra extension
+                $imageName = $tmpName . '.' . $tmpExtension;
+                try {
+                    $img->move(
+                        $this->getParameter('AuthorImage'), $imageName
+                    );
+                    /* Note: cần khai báo đường dẫn thư mục chứa ảnh
+                     ở file config/services.yaml */
+                }
+                catch (FileException $exception)
+                {
+                    throwException($exception);
+                }
+                $author->setAuthorImage($imageName);
+            }
             $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $author->setUpdateBy("Đỗ Minh Ngọc update");
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Update author success');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('author/edit.html.twig', [

@@ -32,6 +32,7 @@ class AuthorType extends AbstractType
                     ]
             ])
             ->add('AuthorImage', FileType::class, [
+                'data_class' => null,
                 'label' => 'Author image',
                 'required' => false,
                 'attr' =>

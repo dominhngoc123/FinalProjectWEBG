@@ -22,68 +22,65 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <i class="fa fa-table"></i> Manage authors</div>
-        <div class="card-body">
-            <div class="form-group">
-                <form action="{{path('search_author')}}" method="POST">
-                    <input class="form-control" type="search" name="searchContent" required placeholder ="Search author by name or stage name...">
-                </form>
-            </div>
-            <a href = "{{ path('add_author') }}">
-                <button class="btn btn-primary"><i class="fa fa-plus"></i><span>  Add</span></button>
-            </a>
-            {% if authors != null %}
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>
-                            Author name&nbsp;
-                            <a style="text-decoration: none;" href="{{ path('sort_author_by_fullname_asc') }}"><i class="fa fa-arrow-up"></i></a>&nbsp;
-                            <a style="text-decoration: none;" href="{{ path('sort_author_by_fullname_desc') }}"><i class="fa fa-arrow-down"></i></a>
-                        </th>
-                        <th>
-                            Author stage name&nbsp;
-                            <a style="text-decoration: none;" href="{{ path('sort_author_by_stage_name_asc') }}"><i class="fa fa-arrow-up"></i></a>&nbsp;
-                            <a style="text-decoration: none;" href="{{ path('sort_author_by_stage_name_desc') }}"><i class="fa fa-arrow-down"></i></a>
-                        </th>
-                        <th>Create At</th>
-                        <th>Update At</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Author name</th>
-                        <th>Author stage name</th>
-                        <th>Create At</th>
-                        <th>Update At</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    {% for author in authors %}
-                        <tr>
-                            <td> {{ author.AuthorFullName }}</td>
-                            <td> {{ author.AuthorStageName }}</td>
-                            <td> {{ author.CreateAt ? author.CreateAt|date('d-m-Y') : '' }}</td>
-                            <td> {{ author.UpdateAt ? author.UpdateAt|date('d-m-Y') : '' }}</td>
-                            <td style="text-align: center;">
-                                <a href="{{ path('show_author', {'id': author.id}) }}" style="text-decoration: none;" title="View detail"><i class="fa fa-eye"></i></a>
-                                &nbsp;&nbsp;
-                                <a href="{{ path('update_author', {'id': author.id}) }}" style="text-decoration: none;" title="Edit"><i class="fa fa-edit"></i></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-                <p>No author found</p>
-            {% endif %}
+    <div class="container profile-page">
+        <div class="form-group">
+            <form action="{{path('search_author')}}" method="POST">
+                <input class="form-control" type="search" name="searchContent" required placeholder ="Search author by name or stage name...">
+            </form>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        <a href = "{{ path('add_author') }}">
+            <button class="btn btn-primary"><i class="fa fa-plus"></i><span>  Add</span></button>
+        </a>
+        {% if authors != null %}
+        <div class="row">
+            {% for author in authors %}
+            <div class="col-xl-6 col-lg-7 col-md-12 shadow">
+                <div class="profile-card profile-header">
+                    <div class="profile-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="profile-image float-md-right"><img class="avatar-img" src="{% if author.AuthorImage != null %}
+                                    {{ asset('assets/img/Author/' ~ author.AuthorImage) }}
+                                    {% else %}
+                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {% endif %}
+                                    " alt=""></div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-12">
+                                <h4 class="m-t-0 m-b-0">{{ author.AuthorFullName }}</h4>
+                                <span>{{ author.AuthorStagename }}</span>
+                                <p>{{ author.AuthorDescription }}</p>
+                                <div>
+                                    <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('show_author', {'id': author.id}) }}"><i class="fa fa-eye"></i>Detail</a>
+                                    <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('update_author', {'id': author.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+            <br/>
+        <div class="row">
+            <div class="col-12">
+                <div class="text-right">
+                    <ul class="pagination pagination-split mt-0 float-right">
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="text-center">
+                <p>No author found</p>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
