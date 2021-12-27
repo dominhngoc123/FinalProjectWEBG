@@ -30,6 +30,16 @@ class Author
     private $AuthorStageName;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AuthorImage;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AuthorDescription;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $CreateAt;
@@ -50,23 +60,13 @@ class Author
     private $UpdateBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=AuthorBook::class, mappedBy="Author")
+     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="Author")
      */
-    private $authorBooks;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $AuthorDescription;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $AuthorImage;
+    private $books;
 
     public function __construct()
     {
-        $this->authorBooks = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +94,32 @@ class Author
     public function setAuthorStageName(?string $AuthorStageName): self
     {
         $this->AuthorStageName = $AuthorStageName;
+
+        return $this;
+    }
+
+    public function getAuthorImage()
+    {
+        return $this->AuthorImage;
+    }
+
+    public function setAuthorImage($AuthorImage)
+    {
+        if ($AuthorImage != null)
+        {
+            $this->AuthorImage = $AuthorImage;
+        }
+        return $this;
+    }
+
+    public function getAuthorDescription(): ?string
+    {
+        return $this->AuthorDescription;
+    }
+
+    public function setAuthorDescription(?string $AuthorDescription): self
+    {
+        $this->AuthorDescription = $AuthorDescription;
 
         return $this;
     }
@@ -147,58 +173,29 @@ class Author
     }
 
     /**
-     * @return Collection|AuthorBook[]
+     * @return Collection|Book[]
      */
-    public function getAuthorBooks(): Collection
+    public function getBooks(): Collection
     {
-        return $this->authorBooks;
+        return $this->books;
     }
 
-    public function addAuthorBook(AuthorBook $authorBook): self
+    public function addBook(Book $book): self
     {
-        if (!$this->authorBooks->contains($authorBook)) {
-            $this->authorBooks[] = $authorBook;
-            $authorBook->setAuthor($this);
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->addAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeAuthorBook(AuthorBook $authorBook): self
+    public function removeBook(Book $book): self
     {
-        if ($this->authorBooks->removeElement($authorBook)) {
-            // set the owning side to null (unless already changed)
-            if ($authorBook->getAuthor() === $this) {
-                $authorBook->setAuthor(null);
-            }
+        if ($this->books->removeElement($book)) {
+            $book->removeAuthor($this);
         }
 
         return $this;
-    }
-
-    public function getAuthorDescription(): ?string
-    {
-        return $this->AuthorDescription;
-    }
-
-    public function setAuthorDescription(?string $AuthorDescription): self
-    {
-        $this->AuthorDescription = $AuthorDescription;
-
-        return $this;
-    }
-
-    public function getAuthorImage()
-    {
-        return $this->AuthorImage;
-    }
-
-    public function setAuthorImage($AuthorImage)
-    {
-        if ($AuthorImage != null)
-        {
-            $this->AuthorImage = $AuthorImage;
-            return $this;
-        }
     }
 }

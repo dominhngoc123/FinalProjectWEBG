@@ -20,7 +20,22 @@ class Book
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToMany(targetEntity=Author::class, inversedBy="books")
+     */
+    private $Author;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Type::class, inversedBy="books")
+     */
+    private $Type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="books")
+     */
+    private $Category;
+
+    /**
+     * @ORM\Column(type="string", length=100)
      */
     private $BookTitle;
 
@@ -28,6 +43,11 @@ class Book
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $PublishedAt;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $PublishedBy;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -40,9 +60,14 @@ class Book
     private $BookPrice;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="integer")
      */
     private $BookQuantity;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $BookImage;
 
     /**
      * @ORM\Column(type="datetime")
@@ -65,41 +90,93 @@ class Book
     private $UpdateBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Book")
+     * @ORM\ManyToMany(targetEntity=Order::class, inversedBy="books")
      */
-    private $orderDetails;
-
-    /**
-     * @ORM\OneToMany(targetEntity=AuthorBook::class, mappedBy="Book")
-     */
-    private $authorBooks;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $BookImage;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BookType::class, mappedBy="Book")
-     */
-    private $bookTypes;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BookCategory::class, mappedBy="Book")
-     */
-    private $bookCategories;
+    private $_Order;
 
     public function __construct()
     {
-        $this->orderDetails = new ArrayCollection();
-        $this->authorBooks = new ArrayCollection();
-        $this->bookTypes = new ArrayCollection();
-        $this->bookCategories = new ArrayCollection();
+        $this->Author = new ArrayCollection();
+        $this->Type = new ArrayCollection();
+        $this->Category = new ArrayCollection();
+        $this->_Order = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Author[]
+     */
+    public function getAuthor(): Collection
+    {
+        return $this->Author;
+    }
+
+    public function addAuthor(Author $author): self
+    {
+        if (!$this->Author->contains($author)) {
+            $this->Author[] = $author;
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(Author $author): self
+    {
+        $this->Author->removeElement($author);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Type[]
+     */
+    public function getType(): Collection
+    {
+        return $this->Type;
+    }
+
+    public function addType(Type $type): self
+    {
+        if (!$this->Type->contains($type)) {
+            $this->Type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(Type $type): self
+    {
+        $this->Type->removeElement($type);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->Category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->Category->contains($category)) {
+            $this->Category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->Category->removeElement($category);
+
+        return $this;
     }
 
     public function getBookTitle(): ?string
@@ -122,6 +199,18 @@ class Book
     public function setPublishedAt(?\DateTimeInterface $PublishedAt): self
     {
         $this->PublishedAt = $PublishedAt;
+
+        return $this;
+    }
+
+    public function getPublishedBy(): ?string
+    {
+        return $this->PublishedBy;
+    }
+
+    public function setPublishedBy(?string $PublishedBy): self
+    {
+        $this->PublishedBy = $PublishedBy;
 
         return $this;
     }
@@ -158,6 +247,18 @@ class Book
     public function setBookQuantity(int $BookQuantity): self
     {
         $this->BookQuantity = $BookQuantity;
+
+        return $this;
+    }
+
+    public function getBookImage(): ?string
+    {
+        return $this->BookImage;
+    }
+
+    public function setBookImage(?string $BookImage): self
+    {
+        $this->BookImage = $BookImage;
 
         return $this;
     }
@@ -211,133 +312,25 @@ class Book
     }
 
     /**
-     * @return Collection|OrderDetail[]
+     * @return Collection|Order[]
      */
-    public function getOrderDetails(): Collection
+    public function getOrder(): Collection
     {
-        return $this->orderDetails;
+        return $this->_Order;
     }
 
-    public function addOrderDetail(OrderDetail $orderDetail): self
+    public function addOrder(Order $order): self
     {
-        if (!$this->orderDetails->contains($orderDetail)) {
-            $this->orderDetails[] = $orderDetail;
-            $orderDetail->setBook($this);
+        if (!$this->_Order->contains($order)) {
+            $this->_Order[] = $order;
         }
 
         return $this;
     }
 
-    public function removeOrderDetail(OrderDetail $orderDetail): self
+    public function removeOrder(Order $order): self
     {
-        if ($this->orderDetails->removeElement($orderDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($orderDetail->getBook() === $this) {
-                $orderDetail->setBook(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AuthorBook[]
-     */
-    public function getAuthorBooks(): Collection
-    {
-        return $this->authorBooks;
-    }
-
-    public function addAuthorBook(AuthorBook $authorBook): self
-    {
-        if (!$this->authorBooks->contains($authorBook)) {
-            $this->authorBooks[] = $authorBook;
-            $authorBook->setBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthorBook(AuthorBook $authorBook): self
-    {
-        if ($this->authorBooks->removeElement($authorBook)) {
-            // set the owning side to null (unless already changed)
-            if ($authorBook->getBook() === $this) {
-                $authorBook->setBook(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getBookImage(): ?string
-    {
-        return $this->BookImage;
-    }
-
-    public function setBookImage(?string $BookImage): self
-    {
-        $this->BookImage = $BookImage;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BookType[]
-     */
-    public function getBookTypes(): Collection
-    {
-        return $this->bookTypes;
-    }
-
-    public function addBookType(BookType $bookType): self
-    {
-        if (!$this->bookTypes->contains($bookType)) {
-            $this->bookTypes[] = $bookType;
-            $bookType->setBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBookType(BookType $bookType): self
-    {
-        if ($this->bookTypes->removeElement($bookType)) {
-            // set the owning side to null (unless already changed)
-            if ($bookType->getBook() === $this) {
-                $bookType->setBook(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BookCategory[]
-     */
-    public function getBookCategories(): Collection
-    {
-        return $this->bookCategories;
-    }
-
-    public function addBookCategory(BookCategory $bookCategory): self
-    {
-        if (!$this->bookCategories->contains($bookCategory)) {
-            $this->bookCategories[] = $bookCategory;
-            $bookCategory->setBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBookCategory(BookCategory $bookCategory): self
-    {
-        if ($this->bookCategories->removeElement($bookCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($bookCategory->getBook() === $this) {
-                $bookCategory->setBook(null);
-            }
-        }
+        $this->_Order->removeElement($order);
 
         return $this;
     }

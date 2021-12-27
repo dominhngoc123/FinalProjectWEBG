@@ -50,13 +50,14 @@ class Type
     private $UpdateBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=BookType::class, mappedBy="Type")
+     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="Type")
      */
-    private $bookTypes;
+    private $books;
+
 
     public function __construct()
     {
-        $this->bookTypes = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,30 +138,27 @@ class Type
     }
 
     /**
-     * @return Collection|BookType[]
+     * @return Collection|Book[]
      */
-    public function getBookTypes(): Collection
+    public function getBooks(): Collection
     {
-        return $this->bookTypes;
+        return $this->books;
     }
 
-    public function addBookType(BookType $bookType): self
+    public function addBook(Book $book): self
     {
-        if (!$this->bookTypes->contains($bookType)) {
-            $this->bookTypes[] = $bookType;
-            $bookType->setType($this);
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->addType($this);
         }
 
         return $this;
     }
 
-    public function removeBookType(BookType $bookType): self
+    public function removeBook(Book $book): self
     {
-        if ($this->bookTypes->removeElement($bookType)) {
-            // set the owning side to null (unless already changed)
-            if ($bookType->getType() === $this) {
-                $bookType->setType(null);
-            }
+        if ($this->books->removeElement($book)) {
+            $book->removeType($this);
         }
 
         return $this;

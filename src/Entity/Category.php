@@ -50,13 +50,13 @@ class Category
     private $UpdateBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=BookCategory::class, mappedBy="Category")
+     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="Category")
      */
-    private $bookCategories;
+    private $books;
 
     public function __construct()
     {
-        $this->bookCategories = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,30 +137,27 @@ class Category
     }
 
     /**
-     * @return Collection|BookCategory[]
+     * @return Collection|Book[]
      */
-    public function getBookCategories(): Collection
+    public function getBooks(): Collection
     {
-        return $this->bookCategories;
+        return $this->books;
     }
 
-    public function addBookCategory(BookCategory $bookCategory): self
+    public function addBook(Book $book): self
     {
-        if (!$this->bookCategories->contains($bookCategory)) {
-            $this->bookCategories[] = $bookCategory;
-            $bookCategory->setCategory($this);
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->addCategory($this);
         }
 
         return $this;
     }
 
-    public function removeBookCategory(BookCategory $bookCategory): self
+    public function removeBook(Book $book): self
     {
-        if ($this->bookCategories->removeElement($bookCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($bookCategory->getCategory() === $this) {
-                $bookCategory->setCategory(null);
-            }
+        if ($this->books->removeElement($book)) {
+            $book->removeCategory($this);
         }
 
         return $this;
