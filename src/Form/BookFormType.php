@@ -1,0 +1,109 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Book;
+use App\Entity\Category;
+use App\Entity\Author;
+use App\Entity\Type;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class BookFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('BookTitle', TextType::class, [
+                'label' => 'Book Title',
+                'required' => true,
+                'attr' =>
+                [
+                    'maxlength' => 1000
+                ]
+            ])
+            ->add('PublishedAt', IntegerType::class,         
+            [
+                'label' => 'Published Year',
+                'required' => true,
+                'attr' =>
+                [
+                    'min' => 2000,
+                    'max' => 2021
+                ]
+            ])
+            ->add('BookQuantity', IntegerType::class,         
+            [
+                'label' => 'Book Quantity',
+                'required' => true,
+                'attr' =>
+                [
+                    'min' => 2000,
+                    'max' => 2021
+                ]
+            ])
+            ->add('BookPrice', MoneyType::class,
+            [
+                'label' => 'Book Price',
+                'required' => true,
+                'currency' => 'USD'
+            ])           
+            ->add('Category', EntityType::class,
+            [
+                'label' => 'Book Category',
+                'class' => Category::class,
+                'choice_label' => 'id',
+                'multiple' => true,
+                'expanded' => true
+            ])
+            ->add('Author', EntityType::class,
+            [
+                'label' => 'Book Authors',
+                'class' => Author::class,
+                'choice_label' => 'id',
+                'multiple' => true,
+                'expanded' => true
+            ])
+            ->add('Type', EntityType::class,
+            [
+                'label' => 'Book Type',
+                'class' => Type::class,
+                'choice_label' => 'TypeName',
+                'multiple' => true,
+                'expanded' => false
+            ])
+            ->add('BookImage', FileType::class, [
+                'data_class' => null,
+                'label' => 'Book image',
+                'required' => false,
+                'attr' =>
+                    [
+                        'maxlength' => 255
+                    ]
+            ])
+            ->add('BookSummary', TextareaType::class, [
+                'label' => 'Book Summary',
+                'required' => false,
+                'attr' =>
+                    [
+                        'rows' => 5,
+                        ''
+                    ]
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Book::class,
+        ]);
+    }
+}

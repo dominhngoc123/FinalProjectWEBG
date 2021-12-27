@@ -15,4 +15,18 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig');
     }
+    /**
+     * @Route("/productList", name="productList")
+     */
+    public function listProduct(): Response
+    {
+        return $this->render('product/listProduct.html.twig');
+    }
+    /**
+     * @Route("/cartItem", name="cartItem")
+     */
+    public function viewCart(): Response
+    {
+        return $this->render('product/cartItem.html.twig');
+    }
 }
