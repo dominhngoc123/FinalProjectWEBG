@@ -34,32 +34,41 @@ class AuthorController extends AbstractController
      */
     public function Create(Request $request): Response
     {
+        // Khởi tạo đối tượng
         $author = new Author();
+        // Tạo form
         $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
+        // Kiểm tra form có submit hay không
+        // Và data đã valid chưa
         if ($form->isSubmitted() && $form->isValid())
         {
+            // Lấy image của author trong form
             $img = $author->getAuthorImage();
-            if ($img != null)
-            {
+            // Kiểm tra image có null hay không
+            if ($img != null) {
+                // Tạo tên duy nhất
                 $tmpName = uniqid();
+                // Lấy extension của ảnh
                 $tmpExtension = $img->guessExtension();
                 //Thêm phần kiểm tra extension
+                // Cộng 2 chuỗi thành tên ảnh
                 $imageName = $tmpName . '.' . $tmpExtension;
                 try {
+                    //Di chuyển ảnh
                     $img->move(
                         $this->getParameter('AuthorImage'), $imageName
                     );
                     /* Note: cần khai báo đường dẫn thư mục chứa ảnh
                      ở file config/services.yaml */
-                }
-                catch (FileException $exception)
-                {
+                } catch (FileException $exception) {
                     throwException($exception);
                 }
+                //Gán tên cho author
                 $author->setAuthorImage($imageName);
             }
             $manager = $this->getDoctrine()->getManager();
+            //Thêm các data cần thiết
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $author->setCreateBy("Đỗ Minh Ngọc");
@@ -102,7 +111,7 @@ class AuthorController extends AbstractController
                 }
                 $author->setAuthorImage($imageName);
             }
-            $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d', time())));
+            $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $author->setUpdateBy("Đỗ Minh Ngọc update");
             $this->getDoctrine()->getManager()->flush();
