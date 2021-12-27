@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\Category;
 use App\Entity\Author;
 use App\Entity\Type;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,17 +60,23 @@ class BookFormType extends AbstractType
             [
                 'label' => 'Book Category',
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'CategoryName',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'slt_type form-control'
+                ]
             ])
             ->add('Author', EntityType::class,
             [
                 'label' => 'Book Authors',
                 'class' => Author::class,
-                'choice_label' => 'id',
+                'choice_label' => 'AuthorFullName',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'slt_type form-control'
+                ]
             ])
             ->add('Type', EntityType::class,
             [
@@ -77,7 +84,10 @@ class BookFormType extends AbstractType
                 'class' => Type::class,
                 'choice_label' => 'TypeName',
                 'multiple' => true,
-                'expanded' => false
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'slt_type form-control'
+                ]
             ])
             ->add('BookImage', FileType::class, [
                 'data_class' => null,

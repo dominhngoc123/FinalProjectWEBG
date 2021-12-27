@@ -21,41 +21,79 @@
         <h2 class="text-center">ADD AUTHOR</h2>
         <div class="col md-6"></div>
         {{ form_start (bookForm) }}
-        {# <div class="form-group">
-            {{ form_label (authorForm.AuthorFullName)}}
-            {{ form_widget (authorForm.AuthorFullName ,
+        <div class="form-group">
+            {{ form_label (bookForm.BookTitle)}}
+            {{ form_widget (bookForm.BookTitle ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
             }}
         </div>
         <div class="form-group">
-            {{ form_label (authorForm.AuthorStageName)}}
-            {{ form_widget (authorForm.AuthorStageName ,
+            {{ form_label (bookForm.PublishedAt)}}
+            {{ form_widget (bookForm.PublishedAt ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
             }}
         </div>
         <div class="form-group">
-            {{ form_label (authorForm.AuthorImage)}}
-            {{ form_widget (authorForm.AuthorImage ,
+            {{ form_label (bookForm.BookQuantity)}}
+            {{ form_widget (bookForm.BookQuantity ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
             }}
         </div>
         <div class="form-group">
-            {{ form_label (authorForm.AuthorDescription)}}
-            {{ form_widget (authorForm.AuthorDescription ,
+            {{ form_label (bookForm.BookPrice)}}
+            {{ form_widget (bookForm.BookPrice ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
             }}
-        </div> #}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.Category)}}
+            {{ form_widget (bookForm.Category)
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.Author)}}
+            {{ form_widget (bookForm.Author)
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.Type)}}
+            {{ form_widget (bookForm.Type)
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.BookImage)}}
+            {{ form_widget (bookForm.BookImage ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.BookSummary)}}
+            {{ form_widget (bookForm.BookSummary ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
         <div class="form-group text-center mt-3">
             <input class="btn btn-primary" type="submit" value="Add" />
         </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".slt_type").select2({
+                    dropdownPosition: 'below'
+                });
+            });
+        </script>
         {{ form_end (bookForm)}}
     </div>
 {% endblock %}

@@ -46,7 +46,6 @@ class AuthorType extends AbstractType
                 'attr' =>
                     [
                         'rows' => 5,
-                        ''
                     ]
             ])
         ;
