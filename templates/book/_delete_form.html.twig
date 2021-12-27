@@ -1,0 +1,4 @@
+<form id="delete_author_form" method="post" action="{{ path('delete_author', {'id': author.id}) }}" onsubmit="return confirm('Are you sure you want to delete author {{ author.AuthorFullName }}?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ author.id) }}">
+    <a href="javascript:{}" onclick="document.getElementById('delete_author_form').submit()"><i class="fa fa-trash"></i></a>
+</form>
