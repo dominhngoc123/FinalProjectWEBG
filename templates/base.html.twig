@@ -67,7 +67,7 @@
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-user"></i>
-                    <span class="nav-link-text">User</span>
+                    <span class="nav-link-text">{{ app.user.UserFullName }}</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
                     <li>
@@ -77,7 +77,7 @@
                         <a href="#"><i class="fa fa-fw fa-cogs"></i><span class="nav-link-text"> Settings</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-sign-out"></i><span class="nav-link-text"> Sign out</span></a>
+                        <a href="{{ path('app_logout') }}"><i class="fa fa-fw fa-sign-out"></i><span class="nav-link-text"> Sign out</span></a>
                     </li>
                 </ul>
             </li>
@@ -325,7 +325,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
                 </div>
             </div>
         </div>

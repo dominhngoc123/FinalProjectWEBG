@@ -102,7 +102,7 @@ class AuthorController extends AbstractController
                 }
                 $author->setAuthorImage($imageName);
             }
-            $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+            $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $author->setUpdateBy("Đỗ Minh Ngọc update");
             $this->getDoctrine()->getManager()->flush();
