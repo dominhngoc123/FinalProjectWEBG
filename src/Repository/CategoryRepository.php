@@ -47,4 +47,17 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Category[] 
+     */
+    public function searchCateByName ($category_name){
+        return $this->createQueryBuilder('cateName') 
+                    ->andWhere('cateName.category_name LIKE :category_name')
+                    ->setParameter('category_name', '%'.$category_name.'%')
+                    ->orderBy('cateName','ASC')
+                    ->getQuery(5)
+                    ->getResult();
+
+    }
 }

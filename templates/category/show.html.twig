@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('category') }}">category</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Detail
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    <div class="content">
+        <div class="container">
+            <!-- end row -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="card profile-header">
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-12">
+                                    <div class="information-detail" style="height: 300px;">
+                                        <h4 class="m-t-0 m-b-0">{{ category.CategoryName }}</h4>
+                                        <span class="job_post">{{ category.CreateAt ? category.CreateAt|date('d-m-Y') : '' }}</span>
+                                        <p>{{ category.CategoryDescription }}</p>
+                                    </div>
+                                    <div class="float-md-right ">
+                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('delete_category', {'id': category.id}) }}" onclick="return confirm('Do you want to delete category{{ category.CategoryName }}')"><i class="fa fa-trash"></i>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}

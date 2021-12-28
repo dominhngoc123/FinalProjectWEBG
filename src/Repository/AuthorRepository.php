@@ -19,10 +19,10 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-    // /**
-    //  * @return Author[] Returns an array of Author objects
-    //  */
-    /*
+    /**
+      * @return Author[] Returns an array of Author objects
+      */
+    
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
@@ -34,9 +34,9 @@ class AuthorRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
-    /*
+
     public function findOneBySomeField($value): ?Author
     {
         return $this->createQueryBuilder('a')
@@ -46,7 +46,11 @@ class AuthorRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+<<<<<<< HEAD
     */
+=======
+
+>>>>>>> 51daaf9a9f4f8e1cdc0f0e84c1b92cb6319a92bf
     public function findByAuthorNameOrStageName($searchContent)
     {
         return $this->createQueryBuilder('a')
