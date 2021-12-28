@@ -94,6 +94,11 @@ class Book
      */
     private $_Order;
 
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $type_product;
+
     public function __construct()
     {
         $this->Author = new ArrayCollection();
@@ -251,15 +256,16 @@ class Book
         return $this;
     }
 
-    public function getBookImage(): ?string
+    public function getBookImage()
     {
         return $this->BookImage;
     }
 
-    public function setBookImage(?string $BookImage): self
+    public function setBookImage($BookImage)
     {
-        $this->BookImage = $BookImage;
-
+        if ($BookImage != null) {
+            $this->BookImage = $BookImage;
+        }
         return $this;
     }
 
@@ -331,6 +337,18 @@ class Book
     public function removeOrder(Order $order): self
     {
         $this->_Order->removeElement($order);
+
+        return $this;
+    }
+
+    public function getTypeProduct(): ?string
+    {
+        return $this->type_product;
+    }
+
+    public function setTypeProduct(?string $type_product): self
+    {
+        $this->type_product = $type_product;
 
         return $this;
     }

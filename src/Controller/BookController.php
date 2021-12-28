@@ -43,16 +43,15 @@ class BookController extends AbstractController
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
         if ($book == null) {
             $this->addFlash("Error", "Book not exist");
-            return $this->redirectToRoute("book_index");
+            return $this->redirectToRoute("book");
         }
-        return $this->render("book/detail.html.twig",
+        return $this->render("book/show.html.twig",
         [
             'book' => $book
         ]);
     }
 
     /** 
-     * @IsGranted("ROLE_STAFF")
      * @Route("/book/delete/{id}", name="book_delete")
      */
     public function bookDelete($id) {
@@ -65,7 +64,7 @@ class BookController extends AbstractController
             $manager->flush();
             $this->addFlash("Success", "Book delete succeed"); 
         }
-        return $this->redirectToRoute("book_index");
+        return $this->redirectToRoute("book");
     }
 
     /**
@@ -79,7 +78,7 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
            //code xử lý việc upload ảnh
            //B1: lấy ảnh từ file upload
-           $image = $book->getCover();
+           $image = $book->getBookImage();
            //B2: đặt tên mới cho ảnh => đảm bảo mỗi ảnh sẽ có 1 tên duy nhất
            $imgName = uniqid(); //unique id
            //B3: lấy đuôi ảnh (image extension)
@@ -90,7 +89,7 @@ class BookController extends AbstractController
            //B5: di chuyển ảnh vào thư mục chỉ định
            try {
              $image->move(
-                 $this->getParameter('book_cover'), $imageName
+                 $this->getParameter('BookImage'), $imageName
                  /* Note: cần khai báo đường dẫn thư mục chứa ảnh
                  ở file config/services.yaml */
              );  
@@ -98,8 +97,9 @@ class BookController extends AbstractController
                throwException($e);
            }
            //B6: lưu tên ảnh vào DB
-           $book->setCover($imageName);
-       
+           $book->setBookImage($imageName);
+           $book->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+           $book->setCreateBy("tester");
             //đẩy dữ liệu từ form vào DB
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($book);
@@ -107,7 +107,7 @@ class BookController extends AbstractController
 
             //hiển thị thông báo và redirect về trang book index
             $this->addFlash("Success", "Add book succeed");
-            return $this->redirectToRoute("book_index");
+            return $this->redirectToRoute("book");
         }
 
         return $this->renderForm("book/add.html.twig",
@@ -117,22 +117,21 @@ class BookController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_STAFF")
      * @Route("/book/edit/{id}", name="book_edit")
      */
     public function bookEdit(Request $request, $id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(BookFormType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             //code xử lý việc upload ảnh
             //B1: lấy dữ liệu ảnh từ form
-            $file = $form['cover']->getData();
+            $file = $form['BookImage']->getData();
             //B2: check xem ảnh có null không
             if ($file != null) { //người dùng update ảnh mới
                 //B3: lấy ảnh từ file upload
-                $image = $book->getCover();
+                $image = $book->getBookImage();
                 //B4: đặt tên mới cho ảnh
                 $imgName = uniqid();
                 //B5: lấy extension của file ảnh
@@ -141,20 +140,22 @@ class BookController extends AbstractController
                 $imageName = $imgName . "." . $imgExtension;
                 //B7: di chuyển ảnh vào thư mục project
                 try {
-                    $image->move($this->getParameter('book_cover'), $imageName);
+                    $image->move($this->getParameter('BookImage'), $imageName);
                 } catch (FileException $e) {
                     throwException($e);
                 }
                 //B8: lưu tên ảnh vào DB
-                $book->setCover($imageName);
+                $book->setBookImage($imageName);
             }
-
+            
+            $book->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+            $book->setCreateBy("tester");
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($book);
             $manager->flush();
 
             $this->addFlash("Success", "Edit book succeed");
-            return $this->redirectToRoute("book_index");
+            return $this->redirectToRoute("book");
         }
 
         return $this->renderForm("book/edit.html.twig",
