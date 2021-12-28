@@ -19,10 +19,10 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-    // /**
-    //  * @return Author[] Returns an array of Author objects
-    //  */
-    /*
+    /**
+      * @return Author[] Returns an array of Author objects
+      */
+    
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
@@ -34,9 +34,9 @@ class AuthorRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
-    /*
+
     public function findOneBySomeField($value): ?Author
     {
         return $this->createQueryBuilder('a')
@@ -46,5 +46,45 @@ class AuthorRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+    public function findByAuthorNameOrStageName($searchContent)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.AuthorFullName = :val')
+            ->orWhere('a.AuthorStageName = :val')
+            ->setParameter('val', $searchContent)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByStageNameAsc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorStageName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByStageNameDesc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorStageName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorFullName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorFullName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

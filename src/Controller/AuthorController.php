@@ -12,9 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
+ * @IsGranted("ROLE_ADMIN")
+ *
  * @Route("/author")
  */
 class AuthorController extends AbstractController
@@ -71,10 +74,11 @@ class AuthorController extends AbstractController
             //Thêm các data cần thiết
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $author->setCreateBy("Đỗ Minh Ngọc");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $author->setCreateBy($security->getUser()->getUserFullName());
             $manager->persist($author);
             $manager->flush();
-            $this->addFlash('success', 'Create author success');
+            $this->addFlash('success', 'Create author success!!');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('author/add.html.twig', [
@@ -113,7 +117,8 @@ class AuthorController extends AbstractController
             }
             $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $author->setUpdateBy("Đỗ Minh Ngọc update");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $author->setUpdateBy($security->getUser()->getUserFullName());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update author success');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
