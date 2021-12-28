@@ -18,7 +18,8 @@ class BookRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Book::class);
     }
-          /**
+
+    /**
      * @return Book[]
      */
     public function getNewProduct () {
@@ -28,6 +29,15 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function getBookById($bookId): ?Book
+    {
+        return $this->createQueryBuilder('book')
+            ->where('book.id = :val')
+            ->setParameter('val', $bookId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
     // /**
     //  * @return Book[] Returns an array of Book objects
