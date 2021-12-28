@@ -72,7 +72,7 @@ class CategoryController extends AbstractController
         {
             $category->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             $security = unserialize($request->getSession()->get("_security_main"));
-            $author->setUpdateBy($security->getUser()->getUserFullName());$this->getDoctrine()->getManager()->flush();
+            $category->setUpdateBy($security->getUser()->getUserFullName());$this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update category success!!');
             return $this->redirectToRoute('category', [], Response::HTTP_SEE_OTHER);
         }
