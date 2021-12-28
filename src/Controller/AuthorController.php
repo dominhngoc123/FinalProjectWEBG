@@ -38,8 +38,6 @@ class AuthorController extends AbstractController
     public function Create(Request $request): Response
     {
         $security = unserialize($request->getSession()->get("_security_main"));
-        echo var_dump($security->getUser()->getRoles());
-        die();
         // Khởi tạo đối tượng
         $author = new Author();
         // Tạo form
