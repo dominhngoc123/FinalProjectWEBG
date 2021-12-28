@@ -22,7 +22,7 @@
                   </div>
                   <h3><a href="shop-item.html">{{book.BookTitle }}</a></h3>
                   <div class="pi-price">${{book.BookPrice }}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': book.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
