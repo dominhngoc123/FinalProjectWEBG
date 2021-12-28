@@ -73,15 +73,9 @@ class AuthorController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             //Thêm các data cần thiết
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-<<<<<<< HEAD
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $security = unserialize($request->getSession()->get("_security_main"));
             $author->setCreateBy($security->getUser()->getUserFullName());
-=======
-            $security = unserialize($request->getSession()->get("_security_main"));
-            $author->setCreateBy($security->getUser()->getUserFullName());
-            $author->setCreateBy("TrangBT");
->>>>>>> 51daaf9a9f4f8e1cdc0f0e84c1b92cb6319a92bf
             $manager->persist($author);
             $manager->flush();
             $this->addFlash('success', 'Create author success!!');
@@ -122,15 +116,9 @@ class AuthorController extends AbstractController
                 $author->setAuthorImage($imageName);
             }
             $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-<<<<<<< HEAD
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $security = unserialize($request->getSession()->get("_security_main"));
             $author->setUpdateBy($security->getUser()->getUserFullName());
-=======
-            $security = unserialize($request->getSession()->get("_security_main"));
-            $author->setUpdateBy($security->getUser()->getUserFullName());
-            $author->setUpdateBy("Trang updated");
->>>>>>> 51daaf9a9f4f8e1cdc0f0e84c1b92cb6319a92bf
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update author success');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
