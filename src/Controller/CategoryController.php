@@ -12,14 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
+ *
  * @Route("/category")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="cate")
+     * @Route("/", name="category")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -42,12 +45,11 @@ class CategoryController extends AbstractController
         // Và data đã valid chưa
         if ($form->isSubmitted() && $form->isValid())
         {
-           
             $manager = $this->getDoctrine()->getManager();
             //Thêm các data cần thiết
             $category->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $category->setCreateBy("TrangBT");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $category->setCreateBy($security->getUser()->getUserFullName());
             $manager->persist($category);
             $manager->flush();
             $this->addFlash('success', 'Create category success!!');
@@ -69,9 +71,8 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $category->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $category->setUpdateBy("Trang updated");
-            $this->getDoctrine()->getManager()->flush();
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $author->setUpdateBy($security->getUser()->getUserFullName());$this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update category success!!');
             return $this->redirectToRoute('category', [], Response::HTTP_SEE_OTHER);
         }
@@ -90,7 +91,7 @@ class CategoryController extends AbstractController
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
         if ($category == null)
         {
-            $this->addFlash('error', 'Category does not exist');
+            $this->addFlash('error', 'Category does not exist!!');
         }
         else
         {
