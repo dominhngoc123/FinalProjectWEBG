@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Manage category{% endblock %}
+{% block title %}Manage type{% endblock %}
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Category</li>
+        <li class="breadcrumb-item active">Type</li>
     </ol>
 {% endblock %}
 
@@ -24,26 +24,26 @@
     {% endfor %}
     <div class="container profile-page">
         <div class="form-group">
-            <form action="{{path('search_category_by_name')}}" method="POST">
-                <input class="form-control" type="search" name="$category_name" required placeholder ="Search category by name...">
+            <form action="{{path('search_type_by_name')}}" method="POST">
+                <input class="form-control" type="search" name="$type_name" required placeholder ="Search type by name...">
             </form>
         </div>
-        <a href = "{{ path('add_category') }}">
+        <a href = "{{ path('add_type') }}">
             <button class="btn btn-primary"><i class="fa fa-plus"></i><span>  Add</span></button>
         </a>
-        {% if categories != null %}
+        {% if types != null %}
         <div class="row">
-            {% for category in categories %}
+            {% for type in types %}
             <div class="col-xl-6 col-lg-7 col-md-12 shadow">
                 <div class="profile-card profile-header">
                     <div class="profile-body">
                         <div class="row">
                             <div class="col-lg-8 col-md-8 col-12">
-                                <h4 class="m-t-0 m-b-0">{{ category.CategoryName }}</h4>
-                                <p>{{ category.CategoryDescription }}</p>
+                                <h4 class="m-t-0 m-b-0">{{ type.TypeName }}</h4>
+                                <p>{{ type.TypeDescription }}</p>
                                 <div>
-                                    <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('show_category', {'id': category.id}) }}"><i class="fa fa-eye"></i>Detail</a>
-                                    <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                    <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('show_type', {'id': type.id}) }}"><i class="fa fa-eye"></i>Detail</a>
+                                    <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('update_type', {'id': type.id}) }}"><i class="fa fa-edit"></i>Edit</a>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
         </div>
         {% else %}
             <div class="text-center">
-                <p>No category found</p>
+                <p>No type found</p>
             </div>
         {% endif %}
     </div>

@@ -8,7 +8,7 @@
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ path('category') }}">Category</a>
+            <a href="{{ path('type') }}">Type</a>
         </li>
         <li class="breadcrumb-item active">
             Update
@@ -18,19 +18,19 @@
 
 {% block display %}
     <div class="container col-md-6 mt-3 mb-3">
-        <h2 class="text-center">Edit Category</h2>
+        <h2 class="text-center">Edit Type</h2>
         <div class="col md-6"></div>
-        {{ form_start (categoryForm) }}
+        {{ form_start (typeForm) }}
         <div class="form-group">
-            {{ form_label (categoryForm.CategoryName)}}
-            {{ form_widget (categoryForm.CategoryName ,
+            {{ form_label (typeForm.TypeName)}}
+            {{ form_widget (typeForm.TypeName ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
             }}
         <div class="form-group">
-            {{ form_label (categoryForm.CategoryDescription)}}
-            {{ form_widget (categoryForm.CategoryDescription ,
+            {{ form_label (typeForm.TypeDescription)}}
+            {{ form_widget (typeForm.TypeDescription ,
                 {
                     'attr' : {'class' : 'form-control'}
                 })
@@ -39,7 +39,7 @@
         <div class="form-group text-center mt-3">
             <input class="btn btn-primary" type="submit" value="Edit" />
         </div>
-        {{ form_end (categoryForm)}}
+        {{ form_end (typeForm)}}
     </div>
 {% endblock %}
 
