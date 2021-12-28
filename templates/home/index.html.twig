@@ -25,7 +25,14 @@
                   <a href="#" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
-               <div id="product-pop-up+{{book.id}}" style="display: none; width: 700px;">
+              {% endfor %}
+              {% endif %}
+            </div>
+            <!-- END PRODUCT LIST -->
+  {% endblock %}
+ {% block popup %}
+    <!-- BEGIN fast view of a product -->
+                  <div id="product-pop-up+{{book.id}}" style="display: none; width: 700px;">
             <div class="product-page product-pop-up">
               <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-3">
@@ -89,12 +96,4 @@ Nostrud duis molestie at dolore.</p>
               </div>
             </div>
     </div>
-              {% endfor %}
-              {% endif %}
-            </div>
-            <!-- END PRODUCT LIST -->
-  {% endblock %}
- {% block popup %}
-    <!-- BEGIN fast view of a product -->
-   
     {% endblock %}
