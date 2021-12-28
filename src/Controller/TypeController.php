@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
+ *
  * @Route("/type")
  */
 class TypeController extends AbstractController
@@ -31,7 +34,7 @@ class TypeController extends AbstractController
     /**
      * @Route("/add", name="add_type")
      */
-    public function createCate(Request $request): Response
+    public function createType(Request $request): Response
     {
         // Khởi tạo đối tượng
         $type = new Type();
@@ -46,8 +49,8 @@ class TypeController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             //Thêm các data cần thiết
             $type->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $type->setCreateBy("TrangBT");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $type->setCreateBy($security->getUser()->getUserFullName());
             $manager->persist($type);
             $manager->flush();
             $this->addFlash('success', 'Create type success!!');
@@ -62,15 +65,15 @@ class TypeController extends AbstractController
      * @Route("/{id}/update", name="update_type", methods={"GET", "POST"})
      */
 
-    public function updateCate(Request $request, Type $type): Response
+    public function updateType(Request $request, Type $type): Response
     {
         $form = $this->createForm(TypeType::class, $type);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
             $type->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $type->setUpdateBy("Trang updated");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $type->setUpdateBy($security->getUser()->getUserFullName());$this->getDoctrine()->getManager()->flush();
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update type success!!');
             return $this->redirectToRoute('type', [], Response::HTTP_SEE_OTHER);
@@ -85,7 +88,7 @@ class TypeController extends AbstractController
      * @Route("/delete/{id}", name="delete_type")
      */
 
-    public function deleteCate($id): Response
+    public function deleteType($id): Response
     {
         $type = $this->getDoctrine()->getRepository(Type::class)->find($id);
         if ($type == null)
