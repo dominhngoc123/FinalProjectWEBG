@@ -20,6 +20,20 @@ class HomeController extends AbstractController
                 'books' => $books
             ]);
     }
+      /**
+     * @Route("/product/detail/{id}", name="product_detail")
+     */
+    public function bookDetail($id) {
+        $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        if ($book == null) {
+            $this->addFlash("Error", "Book not exist");
+            return $this->redirectToRoute("book");
+        }
+        return $this->render("product/details.html.twig",
+        [
+            'book' => $book
+        ]);
+    }
     /**
      * @Route("/productList", name="productList")
      */

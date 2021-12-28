@@ -94,6 +94,14 @@ class BookFormType extends AbstractType
                     'class' => 'slt_type form-control'
                 ]
             ])
+            ->add('type_product', TextType::class, [
+                'label' => 'Type Product',
+                'required' => false,
+                'attr' =>
+                [
+                    'maxlength' => 1000
+                ]
+            ])
             ->add('BookImage', FileType::class, [
                 'data_class' => null,
                 'label' => 'Book image',
