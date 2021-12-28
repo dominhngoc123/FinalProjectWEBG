@@ -37,7 +37,6 @@ class AuthorController extends AbstractController
      */
     public function Create(Request $request): Response
     {
-        $security = unserialize($request->getSession()->get("_security_main"));
         // Khởi tạo đối tượng
         $author = new Author();
         // Tạo form
@@ -75,7 +74,8 @@ class AuthorController extends AbstractController
             //Thêm các data cần thiết
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $author->setCreateBy("Đỗ Minh Ngọc");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $author->setCreateBy($security->getUser()->getUserFullName());
             $manager->persist($author);
             $manager->flush();
             $this->addFlash('success', 'Create author success');
@@ -117,7 +117,8 @@ class AuthorController extends AbstractController
             }
             $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
-            $author->setUpdateBy("Đỗ Minh Ngọc update");
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $author->setUpdateBy($security->getUser()->getUserFullName());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Update author success');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
