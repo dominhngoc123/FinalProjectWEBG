@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,14 +31,18 @@ class BookFormType extends AbstractType
                     'maxlength' => 1000
                 ]
             ])
-            ->add('PublishedAt', IntegerType::class,         
+            ->add('PublishedAt', DateType::class,
             [
+                'widget' => 'single_text',
                 'label' => 'Published Year',
                 'required' => true,
+            ])
+            ->add('PublishedBy', TextType::class, [
+                'label' => 'PublishedBy',
+                'required' => false,
                 'attr' =>
                 [
-                    'min' => 2000,
-                    'max' => 2021
+                    'maxlength' => 1000
                 ]
             ])
             ->add('BookQuantity', IntegerType::class,         
@@ -46,8 +51,8 @@ class BookFormType extends AbstractType
                 'required' => true,
                 'attr' =>
                 [
-                    'min' => 2000,
-                    'max' => 2021
+                    'min' => 0,
+                    'max' => 10000
                 ]
             ])
             ->add('BookPrice', MoneyType::class,
@@ -62,7 +67,7 @@ class BookFormType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'CategoryName',
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'attr' => [
                     'class' => 'slt_type form-control'
                 ]

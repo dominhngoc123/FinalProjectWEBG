@@ -1,2 +1,33 @@
 {% extends 'clientBase.html.twig' %}
+ {% block productHot %}
+              <!-- BEGIN PRODUCT LIST -->
+               <h2>Hot Product</h2>
+            <div class="row product-list">
+              <!-- PRODUCT ITEM START -->
+                 {% if books != null %}
+                 {% for book in books %}
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{% if book.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ book.bookImage) }}
+                                    {% else %}
+                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {% endif %}
+                                    " class="img-responsive" alt="Berry Lace Dress">
+                    <div>
+                      <a href="../../assets/frontend/pages/img/products/model1.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="shop-item.html">{{book.BookTitle }}</a></h3>
+                  <div class="pi-price">${{book.BookPrice }}</div>
+                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <!-- END PRODUCT LIST -->
+  {% endblock %}
 

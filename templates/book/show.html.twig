@@ -8,7 +8,7 @@
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ path('author') }}">Author</a>
+            <a href="{{ path('author') }}">Book</a>
         </li>
         <li class="breadcrumb-item active">
             Detail
@@ -26,8 +26,8 @@
                         <div class="body">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="profile-image" style="text-align: center;"><img class="avatar-img" style="max-width: 100%; max-height: 100%; height: 336px;" src="{% if author.AuthorImage != null %}
-                                    {{ asset('assets/img/Author/' ~ author.AuthorImage) }}
+                                    <div class="profile-image" style="text-align: center;"><img class="avatar-img" style="max-width: 100%; max-height: 100%; height: 336px;" src="{% if book.BookImage != null %}
+                                    {{ asset('assets/img/Book/' ~ book.BookImage) }}
                                     {% else %}
                                     https://bootdey.com/img/Content/avatar/avatar2.png
                                     {% endif %}
@@ -35,14 +35,15 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-12">
                                     <div class="information-detail" style="height: 300px;">
-                                        <h4 class="m-t-0 m-b-0">{{ author.AuthorFullName }}</h4>
-                                        <span class="job_post">{{ author.AuthorStageName }}</span>
-                                        <span class="job_post">{{ author.CreateAt ? author.CreateAt|date('d-m-Y') : '' }}</span>
-                                        <p>{{ author.AuthorDescription }}</p>
+                                      {% for a in book.Category %}  <h4 class="m-t-0 m-b-0">{{ a.CategoryName }}</h4> {% endfor %}
+                                       {% for a in book.Author %}  <h4 class="m-t-0 m-b-0">{{ a.AuthorFullName }}</h4> {% endfor %}
+                                        {% for a in book.Type %}  <h4 class="m-t-0 m-b-0">{{ a.TypeName }}</h4> {% endfor %}
+                                        <span class="job_post">{{ book.CreateAt ? book.CreateAt|date('d-m-Y') : '' }}</span>
+                                        <p>{{ book.BookSummary }}</p>
                                     </div>
                                     <div class="float-md-right ">
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_author', {'id': author.id}) }}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('delete_author', {'id': author.id}) }}" onclick="return confirm('Do you want to delete author {{ author.AuthorFullName }}')"><i class="fa fa-trash"></i>Delete</a>
+                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('book_edit', {'id': book.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('book_delete', {'id': book.id}) }}" onclick="return confirm('Do you want to delete author {{ book.BookTitle }}')"><i class="fa fa-trash"></i>Delete</a>
                                     </div>
                                 </div>
                             </div>

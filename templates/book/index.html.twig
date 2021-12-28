@@ -47,12 +47,11 @@
                                     " alt=""></div>
                             </div>
                             <div class="col-lg-8 col-md-8 col-12">
-                                <h4 class="m-t-0 m-b-0">{{ book.bookFullName }}</h4>
-                                <span>{{ book.bookStagename }}</span>
-                                <p>{{ book.bookDescription }}</p>
+                                <h4 class="m-t-0 m-b-0">{{ book.BookTitle }}</h4>
+                                <p>{{ book.BookSummary }}</p>
                                 <div>
-                                    <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('show_book', {'id': book.id}) }}"><i class="fa fa-eye"></i>Detail</a>
-                                    <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('update_book', {'id': book.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                    <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('book_detail', {'id': book.id}) }}"><i class="fa fa-eye"></i>Detail</a>
+                                    <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('book_edit', {'id': book.id}) }}"><i class="fa fa-edit"></i>Edit</a>
                                 </div>
                             </div>
                         </div>

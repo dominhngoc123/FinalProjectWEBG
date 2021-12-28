@@ -38,6 +38,14 @@
             }}
         </div>
         <div class="form-group">
+            {{ form_label (bookForm.PublishedBy)}}
+            {{ form_widget (bookForm.PublishedBy ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        <div class="form-group">
             {{ form_label (bookForm.BookQuantity)}}
             {{ form_widget (bookForm.BookQuantity ,
                 {
