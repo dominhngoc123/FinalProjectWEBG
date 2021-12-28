@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
 
-            $user->setRoles(['USER']);
+            $user->setRoles(['ROLE_USER']);
             $user->setUsername($form->get('username')->getData());
             $user->setUserFullName($form->get('user_full_name')->getData());
             $user->setUserAddress($form->get('user_address')->getData());
@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-
+            $this->addFlash('success', 'Create account success');
             return $this->redirectToRoute('app_login', [
                 'last_username' => $user->getUsername()
             ], Response::HTTP_SEE_OTHER);

@@ -47,4 +47,45 @@ class AuthorRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByAuthorNameOrStageName($searchContent)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.AuthorFullName = :val')
+            ->orWhere('a.AuthorStageName = :val')
+            ->setParameter('val', $searchContent)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByStageNameAsc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorStageName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByStageNameDesc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorStageName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorFullName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.AuthorFullName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

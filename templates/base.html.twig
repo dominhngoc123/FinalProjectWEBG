@@ -1,3 +1,4 @@
+{% if app.user != null %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +70,9 @@
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-user"></i>
-                    <span class="nav-link-text">{{ app.user.UserFullName }}</span>
+                    <span class="nav-link-text">
+                            {{ app.user.UserFullName}}
+                    </span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseComponents">
                     <li>
@@ -337,4 +340,10 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/base.js') }}"></script>
 {% endblock %}
+{% else %}
+    <script>
+        alert("You have to login to continue using admin feature");
+        window.location.href = "../login";
+    </script>
+{% endif %}
 </html>

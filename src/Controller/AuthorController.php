@@ -12,9 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
+ * @IsGranted("ROLE_ADMIN")
+ *
  * @Route("/author")
  */
 class AuthorController extends AbstractController
@@ -34,6 +37,9 @@ class AuthorController extends AbstractController
      */
     public function Create(Request $request): Response
     {
+        $security = unserialize($request->getSession()->get("_security_main"));
+        echo var_dump($security->getUser()->getRoles());
+        die();
         // Khởi tạo đối tượng
         $author = new Author();
         // Tạo form
