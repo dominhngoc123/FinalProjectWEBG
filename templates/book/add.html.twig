@@ -8,7 +8,7 @@
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ path('author') }}">Author</a>
+            <a href="{{ path('author') }}">Book</a>
         </li>
         <li class="breadcrumb-item active">
             Add
@@ -18,7 +18,7 @@
 
 {% block display %}
     <div class="container col-md-6 mt-3 mb-3">
-        <h2 class="text-center">ADD AUTHOR</h2>
+        <h2 class="text-center">ADD BOOK</h2>
         <div class="col md-6"></div>
         {{ form_start (bookForm) }}
         <div class="form-group">
@@ -74,6 +74,14 @@
         <div class="form-group">
             {{ form_label (bookForm.Type)}}
             {{ form_widget (bookForm.Type)
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (bookForm.type_product)}}
+            {{ form_widget (bookForm.type_product ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
             }}
         </div>
         <div class="form-group">

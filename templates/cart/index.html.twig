@@ -1,0 +1,198 @@
+{% extends 'clientBase.html.twig' %}
+{% block title %}List Products{% endblock %}
+{% block slider %}{% endblock %}
+ {% block new %}{% endblock %}
+ {% block productHot %}
+     <div class="main">
+         <div class="container">
+             <!-- BEGIN SIDEBAR & CONTENT -->
+             <div class="row margin-bottom-40">
+                 <!-- BEGIN CONTENT -->
+                 <div class="col-md-12 col-sm-12">
+                     <h1>Shopping cart</h1>
+                     <div class="goods-page">
+                         <div class="goods-data clearfix">
+                             <div class="table-wrapper-responsive">
+                                 <table summary="Shopping cart">
+                                     <tr>
+                                         <th class="goods-page-image">Image</th>
+                                         <th class="goods-page-description">Description</th>
+                                         <th class="goods-page-ref-no">Ref No</th>
+                                         <th class="goods-page-quantity">Quantity</th>
+                                         <th class="goods-page-price">Unit price</th>
+                                         <th class="goods-page-total" colspan="2">Total</th>
+                                     </tr>
+                                     {% if message != "" %}
+                                         <tr>
+                                             <td colspan="6" class="text-center">{{ message }}</td>
+                                         </tr>
+                                     {% else %}
+                                         {% for item in items %}
+                                             <tr>
+                                                 <td class="goods-page-image">
+                                                     <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt="{{ item['book'].BookTitle }}"></a>
+                                                 </td>
+                                                 <td class="goods-page-description">
+                                                     <h3><a href="#">{{ item['book'].BookTitle }}</a></h3>
+                                                     <p><strong>{{ item['book'].BookSummary }}</p>
+                                                 </td>
+                                                 <td class="goods-page-ref-no">
+                                                     javc2133
+                                                 </td>
+                                                 <td class="goods-page-quantity">
+                                                     <div class="product-quantity">
+                                                         <input id="product-quantity2" type="text" value="{{ item['quantity'] }}" readonly class="form-control input-sm">
+                                                     </div>
+                                                 </td>
+                                                 <td class="goods-page-price">
+                                                     <strong><span>$</span>{{ item['book'].BookPrice }}</strong>
+                                                 </td>
+                                                 <td class="goods-page-total">
+                                                     <strong><span>$</span>{{ item['total_item'] }}</strong>
+                                                 </td>
+                                                 <td class="del-goods-col">
+                                                     <a class="del-goods" href="{{ path('remove_from_cart', {'bookId': item['book'].id}) }}">&nbsp;</a>
+                                                 </td>
+                                             </tr>
+                                         {% endfor %}
+                                     {% endif %}
+                                 </table>
+                             </div>
+
+                             <div class="shopping-total">
+                                 <ul>
+                                     <li>
+                                         <em>Sub total</em>
+                                         <strong class="price"><span>$</span>{{ total }}</strong>
+                                     </li>
+                                     <li>
+                                         <em>Shipping cost</em>
+                                         <strong class="price"><span>$</span>0</strong>
+                                     </li>
+                                     <li class="shopping-total-price">
+                                         <em>Total</em>
+                                         <strong class="price"><span>$</span>{{ total }}</strong>
+                                     </li>
+                                 </ul>
+                             </div>
+                         </div>
+                         <button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button>
+                         <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
+                     </div>
+                 </div>
+                 <!-- END CONTENT -->
+             </div>
+             <!-- END SIDEBAR & CONTENT -->
+
+             <!-- BEGIN SIMILAR PRODUCTS -->
+             <div class="row margin-bottom-40">
+                 <div class="col-md-12 col-sm-12">
+                     <h2>Most popular products</h2>
+                     <div class="owl-carousel owl-carousel4">
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                                 <div class="sticker sticker-new"></div>
+                             </div>
+                         </div>
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress2</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                             </div>
+                         </div>
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress3</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                             </div>
+                         </div>
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress4</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                                 <div class="sticker sticker-sale"></div>
+                             </div>
+                         </div>
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress5</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                             </div>
+                         </div>
+                         <div>
+                             <div class="product-item">
+                                 <div class="pi-img-wrapper">
+                                     <img src="../../assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                     <div>
+                                         <a href="../../assets/frontend/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
+                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                                     </div>
+                                 </div>
+                                 <h3><a href="shop-item.html">Berry Lace Dress6</a></h3>
+                                 <div class="pi-price">$29.00</div>
+                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <!-- END SIMILAR PRODUCTS -->
+         </div>
+     </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script>
+         $('[class*="bootstrap-touchspin-"]').click(function(event) {
+             var $this = $(this);
+
+             if ($this.hasClass('bootstrap-touchspin-down')) {
+                 alert('down');
+             } else if ($this.hasClass('bootstrap-touchspin-up')) {
+                 alert('up');
+             }
+         });
+     </script>
+ {% endblock %}
+ {% block twoItem %}
+ {% endblock %}
