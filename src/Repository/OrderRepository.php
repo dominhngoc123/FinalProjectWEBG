@@ -19,22 +19,41 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    // /**
-    //  * @return Order[] Returns an array of Order objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function findByUserName($value)
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('o.User.UserName LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('o.CreateBy', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function sortByDateASC()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('CreateAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function sortByDateDESC()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('CreateAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Order

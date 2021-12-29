@@ -72,6 +72,7 @@ class AuthorController extends AbstractController
             }
             $manager = $this->getDoctrine()->getManager();
             //Thêm các data cần thiết
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $security = unserialize($request->getSession()->get("_security_main"));
@@ -115,6 +116,7 @@ class AuthorController extends AbstractController
                 }
                 $author->setAuthorImage($imageName);
             }
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $author->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $security = unserialize($request->getSession()->get("_security_main"));

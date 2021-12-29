@@ -90,14 +90,14 @@ class Book
     private $UpdateBy;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Order::class, inversedBy="books")
-     */
-    private $_Order;
-
-    /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $type_product;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="book")
+     */
+    private $OrderDetail;
 
     public function __construct()
     {
@@ -105,6 +105,7 @@ class Book
         $this->Type = new ArrayCollection();
         $this->Category = new ArrayCollection();
         $this->_Order = new ArrayCollection();
+        $this->OrderDetail = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,30 +318,6 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrder(): Collection
-    {
-        return $this->_Order;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->_Order->contains($order)) {
-            $this->_Order[] = $order;
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        $this->_Order->removeElement($order);
-
-        return $this;
-    }
-
     public function getTypeProduct(): ?string
     {
         return $this->type_product;
@@ -349,6 +326,36 @@ class Book
     public function setTypeProduct(?string $type_product): self
     {
         $this->type_product = $type_product;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderDetail[]
+     */
+    public function getOrderDetail(): Collection
+    {
+        return $this->OrderDetail;
+    }
+
+    public function addOrderDetail(OrderDetail $orderDetail): self
+    {
+        if (!$this->OrderDetail->contains($orderDetail)) {
+            $this->OrderDetail[] = $orderDetail;
+            $orderDetail->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetail $orderDetail): self
+    {
+        if ($this->OrderDetail->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getBook() === $this) {
+                $orderDetail->setBook(null);
+            }
+        }
 
         return $this;
     }

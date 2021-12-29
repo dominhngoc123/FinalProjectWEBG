@@ -49,9 +49,9 @@ class AuthorRepository extends ServiceEntityRepository
     public function findByAuthorNameOrStageName($searchContent)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.AuthorFullName = :val')
-            ->orWhere('a.AuthorStageName = :val')
-            ->setParameter('val', $searchContent)
+            ->andWhere('a.AuthorFullName LIKE :val')
+            ->orWhere('a.AuthorStageName LIKE :val')
+            ->setParameter('val', '%' . $searchContent . '%')
             ->getQuery()
             ->getResult();
     }

@@ -46,13 +46,14 @@ class Order
     private $UpdateBy;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="_Order")
+     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="order")
      */
-    private $books;
+    private $OrderDetail;
 
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->OrderDetail = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,27 +122,30 @@ class Order
     }
 
     /**
-     * @return Collection|Book[]
+     * @return Collection|OrderDetail[]
      */
-    public function getBooks(): Collection
+    public function getOrderDetail(): Collection
     {
-        return $this->books;
+        return $this->OrderDetail;
     }
 
-    public function addBook(Book $book): self
+    public function addOrderDetail(OrderDetail $orderDetail): self
     {
-        if (!$this->books->contains($book)) {
-            $this->books[] = $book;
-            $book->addOrder($this);
+        if (!$this->OrderDetail->contains($orderDetail)) {
+            $this->OrderDetail[] = $orderDetail;
+            $orderDetail->setOrder($this);
         }
 
         return $this;
     }
 
-    public function removeBook(Book $book): self
+    public function removeOrderDetail(OrderDetail $orderDetail): self
     {
-        if ($this->books->removeElement($book)) {
-            $book->removeOrder($this);
+        if ($this->OrderDetail->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getOrder() === $this) {
+                $orderDetail->setOrder(null);
+            }
         }
 
         return $this;
