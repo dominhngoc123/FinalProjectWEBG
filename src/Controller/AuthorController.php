@@ -41,6 +41,7 @@ class AuthorController extends AbstractController
         $author = new Author();
         // Tạo form
         $form = $this->createForm(AuthorType::class, $author);
+        // Form xử lý request
         $form->handleRequest($request);
         // Kiểm tra form có submit hay không
         // Và data đã valid chưa
@@ -67,21 +68,30 @@ class AuthorController extends AbstractController
                 } catch (FileException $exception) {
                     throwException($exception);
                 }
-                //Gán tên cho author
+                //Gán tên ảnh cho author
                 $author->setAuthorImage($imageName);
             }
             $manager = $this->getDoctrine()->getManager();
             //Thêm các data cần thiết
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
+            //Lấy data từ session symfony
             $security = unserialize($request->getSession()->get("_security_main"));
             $author->setCreateBy($security->getUser()->getUserFullName());
+            //Thêm author mới tạo vào context
             $manager->persist($author);
+            //Thêm vào database bằng cách tự động gọi và chạy SQL Transaction
             $manager->flush();
             $this->addFlash('success', 'Create author success!!');
             return $this->redirectToRoute('author', [], Response::HTTP_SEE_OTHER);
         }
+        // Nếu chưa thì điều hướng tới page add.html.twig
+        // Tức là khi ấn vào button add symfony sẽ gọi hàm này nhưng tất nhiên form chưa submit
+        // Nên nó sẽ chuyển thẳng tới cái block này để điều hướng tới trang add
+        // Và khi ấn button "Add" thì symfony vẫn gọi hàm này nhưng khi đó form đã submit (và có thể đã valid)
+        // Khi đó mới add order vào database
+        // Luồng của nó sẽ là: Click button "Add" -> gọi hàm Add -> render form để người dùng nhập và submit -> gọi hàm add
+        // lần 2 -> add vào database
         return $this->renderForm('author/add.html.twig', [
             'authorForm' => $form,
         ]);

@@ -34,8 +34,9 @@ class OrderDetail
 
     /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="OrderDetail")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
-    private $_order;
+    private $order;
 
     public function getId(): ?int
     {
@@ -80,12 +81,12 @@ class OrderDetail
 
     public function getOrder(): ?Order
     {
-        return $this->_order;
+        return $this->order;
     }
 
-    public function setOrder(?Order $_order): self
+    public function setOrder(?Order $order): self
     {
-        $this->_order = $_order;
+        $this->order = $order;
 
         return $this;
     }

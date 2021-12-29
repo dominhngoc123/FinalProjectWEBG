@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Add order{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('order') }}">Order</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Add
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container col-md-6 mt-3 mb-3">
+        <h2 class="text-center">Add Order Detail</h2>
+        <div class="col md-6"></div>
+        {{ form_start (orderDetailForm) }}
+        <div class="form-group">
+            {{ form_label (orderDetailForm.Book) }}
+            {{ form_widget (orderDetailForm.Book) }}
+        </div>
+        <div class="form-group">
+            {{ form_label (orderDetailForm.Quantity) }}
+            {{ form_widget (orderDetailForm.Quantity ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        <div class="form-group text-center mt-3">
+            <a class="btn btn-info" href="{{ path('order') }}">Cancel</a>
+            <input class="btn btn-primary" type="submit" value="Add" />
+        </div>
+        {{ form_end (orderDetailForm)}}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".slt_type").select2({
+                    dropdownPosition: 'below'
+                });
+            });
+        </script>
+    </div>
+{% endblock %}
+

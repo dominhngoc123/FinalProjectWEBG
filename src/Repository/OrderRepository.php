@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -55,6 +56,21 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function getOrdersByUser($searchContent)
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT o 
+                FROM App\Entity\Order o
+                JOIN App\Entity\User u WITH o.User = u
+                WHERE u.UserFullName LIKE :val
+            ")
+            ->setParameter('val', '%' . $searchContent . '%')
+            ->getResult();
+    }
     /*
     public function findOneBySomeField($value): ?Order
     {
