@@ -49,7 +49,8 @@ class CartController extends AbstractController
             ]);
         }
         return $this->render('cart/index.html.twig', [
-            'message' => 'No item in cart'
+            'message' => 'No item in cart',
+            'total' => 0
         ]);
     }
 
@@ -101,12 +102,10 @@ class CartController extends AbstractController
     public function remove($bookId, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
-
         if(!empty($cart[$bookId])){
             unset($cart[$bookId]);
         }
         $session->set('cart', $cart);
-
         return $this->redirectToRoute('view_cart');
     }
 }

@@ -15,18 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
+/**
+ * @Route("/book")
+ */
 class BookController extends AbstractController
 {
     /**
-    * @Route("/booklist", methods="GET", name="book_list_api")
-    */
-    public function getBookList() : JsonResponse {
-        $books = $this->getDoctrine()->getRepository(Book::class)->findAll();
-        return $this->json(['books' => $books], 200);
-    }
-   
-    /**
-    * @Route("/book", name="book")
+    * @Route("/", name="book")
     */
     public function bookIndex() {
         $books = $this->getDoctrine()->getRepository(Book::class)->findAll();
@@ -37,7 +32,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/detail/{id}", name="book_detail")
+     * @Route("/detail/{id}", name="book_detail")
      */
     public function bookDetail($id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
@@ -52,7 +47,7 @@ class BookController extends AbstractController
     }
 
     /** 
-     * @Route("/book/delete/{id}", name="book_delete")
+     * @Route("/delete/{id}", name="book_delete")
      */
     public function bookDelete($id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
@@ -68,7 +63,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/add", name="add_book")
+     * @Route("/add", name="add_book")
      */
     public function bookAdd(Request $request) {
         $book = new Book();
@@ -117,7 +112,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/edit/{id}", name="book_edit")
+     * @Route("/edit/{id}", name="book_edit")
      */
     public function bookEdit(Request $request, $id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
@@ -165,7 +160,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/sort/id/asc", name="sort_book_id_asc")
+     * @Route("/sort/id/asc", name="sort_book_id_asc")
      */
     public function sortBookByIdAsc (BookRepository $bookRepository) {
         $books = $bookRepository->sortBookIdAsc();
@@ -176,7 +171,7 @@ class BookController extends AbstractController
     }
 
      /**
-     * @Route("/book/sort/id/desc", name="sort_book_id_desc")
+     * @Route("/sort/id/desc", name="sort_book_id_desc")
      */
     public function sortBookByIdDesc (BookRepository $bookRepository) {
         $books = $bookRepository->sortBookIdDesc();
@@ -187,7 +182,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/search", name="search_book")
+     * @Route("/search", name="search_book")
      */
     public function searchBookByTitle (BookRepository $bookRepository, Request $request) {
         $title = $request->get("title");

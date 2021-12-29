@@ -23,7 +23,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'maxlength' => 50,
-                    'minlength' => 10,
+                    'minlength' => 5,
                     'class' => 'form-control placeholder-no-fix',
                     'placeholder' => 'Username'
                 ]

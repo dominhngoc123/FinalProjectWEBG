@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class Type2Type extends AbstractType
+class TypeBookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
