@@ -64,10 +64,18 @@
             <li><a href="{{path('home')}}">Home</a></li>
             <li><a href="">Store</a></li>
             <li class="active">{{type.TypeName}}</li>
-        {% else %}
+        {% elseif category is defined %}
             <li><a href="{{path('home')}}">Home</a></li>
             <li><a href="">Store</a></li>
             <li class="active">{{category.CategoryName}}</li>
+        {% elseif hots is defined %}
+            <li><a href="{{path('home')}}">Home</a></li>
+            <li><a href="">Store</a></li>
+            <li class="active">Hot Product</li>
+        {% else %}
+            <li><a href="{{path('home')}}">Home</a></li>
+            <li><a href="">Store</a></li>
+            <li class="active">New Product</li>
         {% endif %}
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
@@ -152,8 +160,48 @@
                 </div>
               </div>
               {% endfor %}
-              {% else %}
+              {% elseif category is defined %}
               {% for a in category.books %} 
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{% if a.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ a.bookImage) }}
+                                    {% else %}
+                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {% endif %}" class="img-responsive img-hot" alt="Berry Lace Dress">
+                    <div>
+                      <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <div class="pi-price">${{a.BookPrice}}</div>
+                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% elseif hots is defined %}
+              {% for a in hots %} 
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{% if a.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ a.bookImage) }}
+                                    {% else %}
+                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {% endif %}" class="img-responsive img-hot" alt="Berry Lace Dress">
+                    <div>
+                      <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <div class="pi-price">${{a.BookPrice}}</div>
+                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              {% for a in news %} 
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">

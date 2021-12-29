@@ -26,6 +26,7 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.type_product = :val')
             ->setParameter('val', 'NEW')
+            ->orderBy('b.CreateAt','DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()
@@ -38,6 +39,7 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.type_product = :val')
             ->setParameter('val', 'HOT')
+            ->orderBy('b.CreateAt','DESC')
             ->setMaxResults(12)
             ->getQuery()
             ->getResult()
@@ -50,6 +52,7 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.type_product = :val')
             ->setParameter('val', 'SELLER')
+            ->orderBy('b.CreateAt','DESC')
             ->setMaxResults(3)
             ->getQuery()
             ->getResult()
@@ -62,10 +65,24 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.type_product = :val')
             ->setParameter('val', 'POPULAR')
+            ->orderBy('b.CreateAt','DESC')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult()
             ;
+    }
+    /**
+     * @return Book[]
+     */
+    public function searchByTitle ($title) {
+        return $this->createQueryBuilder('book')
+                    ->andWhere('book.BookTitle LIKE :title')
+                    ->setParameter('title', '%' . $title . '%')
+                    ->orderBy('book.BookTitle','asc')
+                    ->setMaxResults(50)
+                    ->getQuery()
+                    ->getResult()
+                    ;
     }
     public function getBookById($bookId): ?Book
     {

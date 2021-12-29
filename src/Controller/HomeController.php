@@ -8,6 +8,7 @@ use App\Entity\Type;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TypeRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,12 +93,60 @@ class HomeController extends AbstractController
             'categories' => $category
         ]);
     }
-    /**
-     * @Route("/productList", name="productList")
+     /**
+     * @Route("/hotProduct", name="hot_product")
      */
-    public function listProduct(): Response
-    {
-        return $this->render('product/listProduct.html.twig');
+    public function getHotProduct(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->getHotProduct();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+     /**
+     * @Route("/newProduct", name="new_product")
+     */
+    public function getNewProduct(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->getNewProduct();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'news' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+    /**
+     * @Route("/product/search", name="search_book_by_title")
+     */
+    public function searchBookByTitle (BookRepository $bookRepository, Request $request,CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $title = $request->get("title");
+        $books = $bookRepository->searchByTitle($title);
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        return $this->render("product/searchResult.html.twig",
+        [
+            'variable' => $title, 
+            'books' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
     }
     /**
      * @Route("/cartItem", name="cartItem")
