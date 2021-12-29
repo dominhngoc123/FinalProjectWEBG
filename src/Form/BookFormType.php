@@ -102,6 +102,21 @@ class BookFormType extends AbstractType
                     'maxlength' => 1000
                 ]
             ])
+            ->add('type_product', ChoiceType::class,
+                [
+                    'label' => 'Type Product',
+                    'choices' => [
+                        'New Product' =>  'NEW',
+                        'Hot Product' => 'HOT',
+                        'Seller Product' => 'SELLER',
+                        'Normal Product' => 'NORMAL',
+                        'Popular Product' => 'POPULAR',
+                    ],
+                    'attr' => [
+                        'class' => 'radio-btn'
+                    ],
+                    'expanded' => true
+                ])
             ->add('BookImage', FileType::class, [
                 'data_class' => null,
                 'label' => 'Book image',

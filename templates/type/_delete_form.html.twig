@@ -1,0 +1,4 @@
+<form id="delete_type_form" method="post" action="{{ path('delete_type', {'id': type.id}) }}" onsubmit="return confirm('Are you sure you want to delete type {{ type.TypeName }}?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type.id) }}">
+    <a href="javascript:{}" onclick="document.getElementById('delete_type_form').submit()"><i class="fa fa-trash"></i></a>
+</form>

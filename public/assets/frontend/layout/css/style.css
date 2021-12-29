@@ -3051,3 +3051,19 @@ Styler Panel
 .fancybox-overlay {
   z-index: 99999;
 }
+.img-popular {
+    width: 250px;
+    height: auto;
+}
+.img-new {
+    width: 200px;
+    height: auto;
+}
+.img-hot {
+    width: 250px;
+    height: auto;
+}
+.img-list {
+    width: 250px;
+    height: auto;
+}
