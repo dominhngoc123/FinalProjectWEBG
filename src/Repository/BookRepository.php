@@ -26,11 +26,47 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.type_product = :val')
             ->setParameter('val', 'NEW')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
             ;
     }
-
+     /**
+     * @return Book[]
+     */
+    public function getHotProduct () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'HOT')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+     /**
+     * @return Book[]
+     */
+    public function getSellerProduct () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'SELLER')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+      /**
+     * @return Book[]
+     */
+    public function getPopularProduct () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'POPULAR')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     public function getBookById($bookId): ?Book
     {
         return $this->createQueryBuilder('book')
