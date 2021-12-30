@@ -97,7 +97,15 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src=" {{ asset('assets/img/book/' ~ book.bookImage) }}" alt="{{book.BookTitle}}" class="img-responsive" data-BigImgsrc=" {{ asset('assets/img/book/' ~ book.bookImage) }}">
+                    <img src="{% if book.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ book.bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}" alt="{{book.BookTitle}}" class="img-responsive" data-BigImgsrc="{% if book.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ book.bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}">
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
@@ -128,7 +136,7 @@
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
+                    <a style="text-decoration: none;" href="{{ path('add_to_cart', {'bookId': book.id}) }}"><button class="btn btn-primary">Add to cart</button></a>
                   </div>
                   <div class="review">
                     <input type="range" value="4" step="0.25" id="backing4">
@@ -253,7 +261,11 @@
               <div>
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="{{ asset('assets/img/book/' ~ popular.bookImage) }}" class="img-responsive img-popular" alt="{{popular.BookTitle}}">
+                    <img src="{% if popular.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ popular.bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}" class="img-responsive img-popular" alt="{{popular.BookTitle}}">
                     <div>
                       <a href="{{path('product_detail', {'id': popular.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>

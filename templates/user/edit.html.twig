@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Update{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('user') }}">User</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Update
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+<div class="container col-md-6 mt-3 mb-3">
+    <h2 class="text-center">Edit User</h2>
+    <div class="col md-6"></div>
+    {{ form_start (userForm) }}
+    <div class="form-group">
+        <div class="form-group">
+            {{ form_row(userForm.user_full_name) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.user_address) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.user_phone) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.user_DOB) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.user_email) }}
+        </div>
+        <div class="form-group text-center mt-3">
+            <input class="btn btn-primary" type="submit" value="Edit" />
+        </div>
+        {{ form_end (userForm)}}
+    </div>
+</div>
+{% endblock %}
+

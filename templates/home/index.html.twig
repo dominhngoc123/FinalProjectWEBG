@@ -13,6 +13,8 @@
                  {% for type in types %}
                 <li><a href="{{path('type_detail', {'id': type.id})}}">{{type.TypeName}}</a></li>
                 {% endfor %}
+                  {% else %}
+                    <li><a>No type found</a></li>
               {% endif %}
               </ul>
               <!-- END DROPDOWN MENU -->
@@ -28,6 +30,8 @@
                  {% for category in categories %}
                 <li><a href="{{path('category_detail', {'id': category.id})}}">{{category.CategoryName}}</a></li>
               {% endfor %}
+              {% else %}
+                <li><a>No category found</a></li>
               {% endif %}
               </ul>
             </li>
@@ -71,7 +75,7 @@
                     <img src="{% if new.bookImage != null %}
                                     {{ asset('assets/img/book/' ~ new.bookImage) }}
                                     {% else %}
-                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
                                     {% endif %}
                                     " class="img-responsive img-new" alt="{{new.BookTitle }}">
                     <div>
@@ -107,11 +111,10 @@
                     <img src="{% if book.bookImage != null %}
                                     {{ asset('assets/img/book/' ~ book.bookImage) }}
                                     {% else %}
-                                    https://bootdey.com/img/Content/avatar/avatar2.png
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
                                     {% endif %}
                                     " class="img-responsive img-hot" alt="{{book.BookTitle}}">
                     <div>
-                      <a href="{{asset('assets/img/book/' ~ book.bookImage)}}" class="btn btn-default fancybox-button">Zoom</a>
                       <a href="{{path('product_detail', {'id': book.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
