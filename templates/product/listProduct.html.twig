@@ -37,9 +37,9 @@
               <span class="sep"></span>
               <i class="fa fa-search search-btn"></i>
               <div class="search-box">
-                <form action="#">
+                <form action="{{path('search_book_by_title')}}" method="POST">
                   <div class="input-group">
-                    <input type="text" placeholder="Search" class="form-control">
+                    <input type="text" placeholder="Search" name="title" class="form-control">
                     <span class="input-group-btn">
                       <button class="btn btn-primary" type="submit">Search</button>
                     </span>
@@ -125,7 +125,7 @@
                   <label class="control-label">Sort&nbsp;By:</label>
                   <select class="form-control input-sm">
                     <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                    <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+                    <option value="{{path('search_book_by_title')}}?sort=pd.name&amp;order=ASC"><a href="{{path('search_book_by_title')}}">Name (A - Z)</a></option>
                     <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
                     <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
                     <option value="#?sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
@@ -149,14 +149,14 @@
                                     {{ asset('assets/img/book/' ~ a.bookImage) }}
                                     {% else %}
                                     https://bootdey.com/img/Content/avatar/avatar2.png
-                                    {% endif %}" class="img-responsive img-hot" alt="Berry Lace Dress">
+                                    {% endif %}" class="img-responsive img-hot" alt="{{a.BookTitle}}">
                     <div>
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -176,7 +176,7 @@
                   </div>
                   <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -194,9 +194,9 @@
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -214,9 +214,9 @@
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}

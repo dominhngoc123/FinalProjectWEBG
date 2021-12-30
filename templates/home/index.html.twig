@@ -83,9 +83,9 @@
                       <a href="{{path('product_detail', {'id': new.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{new.BookTitle }}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': new.id})}}">{{new.BookTitle }}</a></h3>
                   <div class="pi-price">${{new.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': new.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                   <div class="sticker sticker-sale"></div>
                 </div>
               </div>
@@ -118,7 +118,7 @@
                       <a href="{{path('product_detail', {'id': book.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{book.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': book.id})}}">{{book.BookTitle}}</a></h3>
                   <div class="pi-price">${{book.BookPrice }}</div>
                   <a href="{{ path('add_to_cart', {'bookId': book.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>

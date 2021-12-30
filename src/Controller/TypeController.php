@@ -39,7 +39,7 @@ class TypeController extends AbstractController
         // Khởi tạo đối tượng
         $type = new Type();
         // Tạo form
-        $form = $this->createForm(TypeType::class, $type);
+        $form = $this->createForm(TypeBookType::class, $type);
         $form->handleRequest($request);
         // Kiểm tra form có submit hay không
         // Và data đã valid chưa
@@ -67,7 +67,7 @@ class TypeController extends AbstractController
 
     public function updateType(Request $request, Type $type): Response
     {
-        $form = $this->createForm(TypeType::class, $type);
+        $form = $this->createForm(TypeBookType::class, $type);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -118,9 +118,10 @@ class TypeController extends AbstractController
     /**
      * @Route("/search", name="search_type_by_name")
      */
-    public function searchType(TypeRepository $typeRepository, $type_name)
+    public function searchType(TypeRepository $typeRepository, Request $request)
     {
-        $types = $typeRepository->searchTypeByName($type_name);
+        $keyWord = $request->get("type_name");
+        $types = $typeRepository->searchTypeByName($keyWord);
         return $this->render("type/index.html.twig", [
             'types' => $types
         ]);

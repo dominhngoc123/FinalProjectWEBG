@@ -53,9 +53,9 @@ class TypeRepository extends ServiceEntityRepository
      */
     public function searchTypeByName ($type_name){
         return $this->createQueryBuilder('typeName')
-            ->andWhere('typeName.type_name LIKE :type_name')
-            ->setParameter('type_name', '%'.$type_name.'%')
-            ->orderBy('typeName.type_name', 'ASC')
+            ->andWhere('typeName.TypeName LIKE :type_name')
+            ->setParameter('type_name', '%' . $type_name . '%')
+            ->orderBy('typeName.TypeName', 'ASC')
             ->getQuery(5)
             ->getResult();
 
