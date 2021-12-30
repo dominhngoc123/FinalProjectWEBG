@@ -37,9 +37,9 @@
               <span class="sep"></span>
               <i class="fa fa-search search-btn"></i>
               <div class="search-box">
-                <form action="#">
+                <form action="{{path('search_book_by_title')}}" method="POST">
                   <div class="input-group">
-                    <input type="text" placeholder="Search" class="form-control">
+                    <input type="text" placeholder="Search" name="title" class="form-control">
                     <span class="input-group-btn">
                       <button class="btn btn-primary" type="submit">Search</button>
                     </span>
@@ -149,7 +149,7 @@
                                     {{ asset('assets/img/book/' ~ a.bookImage) }}
                                     {% else %}
                                     https://bootdey.com/img/Content/avatar/avatar2.png
-                                    {% endif %}" class="img-responsive img-hot" alt="Berry Lace Dress">
+                                    {% endif %}" class="img-responsive img-hot" alt="{{a.BookTitle}}">
                     <div>
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
