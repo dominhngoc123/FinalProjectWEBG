@@ -30,7 +30,11 @@
                                          {% for item in items %}
                                              <tr>
                                                  <td class="goods-page-image">
-                                                     <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" alt="{{ item['book'].BookTitle }}"></a>
+                                                     <a href="#"><img src="{% if item['book'].bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ item['book'].bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}" alt="{{ item['book'].BookTitle }}"></a>
                                                  </td>
                                                  <td class="goods-page-description">
                                                      <h3><a href="#">{{ item['book'].BookTitle }}</a></h3>
@@ -181,18 +185,6 @@
              <!-- END SIMILAR PRODUCTS -->
          </div>
      </div>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script>
-         $('[class*="bootstrap-touchspin-"]').click(function(event) {
-             var $this = $(this);
-
-             if ($this.hasClass('bootstrap-touchspin-down')) {
-                 alert('down');
-             } else if ($this.hasClass('bootstrap-touchspin-up')) {
-                 alert('up');
-             }
-         });
-     </script>
  {% endblock %}
  {% block twoItem %}
  {% endblock %}

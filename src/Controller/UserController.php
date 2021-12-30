@@ -1,4 +1,5 @@
 <?php
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -38,26 +39,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-            $img = $user->getUserImage();
-            if ($img != null)
-            {
-                $tmpName = uniqid();
-                $tmpExtension = $img->guessExtension();
-                //Thêm phần kiểm tra extension
-                $imageName = $tmpName . '.' . $tmpExtension;
-                try {
-                    $img->move(
-                        $this->getParameter('UserImage'), $imageName
-                    );
-                    /* Note: cần khai báo đường dẫn thư mục chứa ảnh
-                     ở file config/services.yaml */
-                }
-                catch (FileException $exception)
-                {
-                    throwException($exception);
-                }
-                $user->setUserImage($imageName);
-            }
             $user->setUpdateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             //Cứ bổ sung dòng này sau này thay thế bằng data từ session
             $security = unserialize($request->getSession()->get("_security_main"));
@@ -105,9 +86,10 @@ class UserController extends AbstractController
     /**
      * @Route("/search", name="search_user_by_name")
      */
-    public function searchCate(UserRepository $userRepository, $user_name)
+    public function searchUser(UserRepository $userRepository, Request $request)
     {
-        $categories = $userRepository->searchCateByName($user_name);
+        $searchContent = $request->get('searchContent');
+        $users = $userRepository->searchUser($searchContent);
         return $this->render("user/index.html.twig", [
             'users' => $users
         ]);

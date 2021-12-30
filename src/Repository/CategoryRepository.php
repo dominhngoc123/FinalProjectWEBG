@@ -52,10 +52,11 @@ class CategoryRepository extends ServiceEntityRepository
      * @return Category[] 
      */
     public function searchCateByName ($category_name){
+        // Trong này là DQL không phải sql nên em lấy các thuộc tính của Entity chứ không phải bảng trong phpmyadmin.
         return $this->createQueryBuilder('cateName') 
-                    ->andWhere('cateName.category_name LIKE :category_name')
+                    ->andWhere('cateName.CategoryName LIKE :category_name')
                     ->setParameter('category_name', '%'. $category_name. '%')
-                    ->orderBy('cateName.category_name','ASC')
+                    ->orderBy('cateName.CategoryName','ASC')
                     ->getQuery(5)
                     ->getResult();
 

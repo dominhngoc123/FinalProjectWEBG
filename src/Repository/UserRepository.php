@@ -51,6 +51,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
+    public function searchUser(string $username)
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Entity\User u
+                WHERE u.username LIKE :query
+                OR u.UserFullName LIKE :query
+                OR u.UserEmail LIKE :query'
+        )
+            ->setParameter('query', '%' . $username . '%')
+            ->getResult();
+    }
+
     /**
      * @return User[] Returns an array of User objects
      */
