@@ -71,22 +71,13 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           //code xử lý việc upload ảnh
-           //B1: lấy ảnh từ file upload
            $image = $book->getBookImage();
-           //B2: đặt tên mới cho ảnh => đảm bảo mỗi ảnh sẽ có 1 tên duy nhất
            $imgName = uniqid(); //unique id
-           //B3: lấy đuôi ảnh (image extension)
            $imgExtension = $image->guessExtension();
-           //Note: cần edit code lại trong file Book Entity (Book.php)
-           //B4: nối tên mới & đuôi ảnh thành tên hoàn chỉnh để lưu vào DB & thư mục
            $imageName = $imgName . "." . $imgExtension;
-           //B5: di chuyển ảnh vào thư mục chỉ định
            try {
              $image->move(
                  $this->getParameter('BookImage'), $imageName
-                 /* Note: cần khai báo đường dẫn thư mục chứa ảnh
-                 ở file config/services.yaml */
              );  
            } catch (FileException $e) {
                throwException($e);
@@ -100,7 +91,6 @@ class BookController extends AbstractController
             $manager->persist($book);
             $manager->flush();
 
-            //hiển thị thông báo và redirect về trang book index
             $this->addFlash("Success", "Add book succeed");
             return $this->redirectToRoute("book");
         }
@@ -120,26 +110,17 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //code xử lý việc upload ảnh
-            //B1: lấy dữ liệu ảnh từ form
             $file = $form['BookImage']->getData();
-            //B2: check xem ảnh có null không
-            if ($file != null) { //người dùng update ảnh mới
-                //B3: lấy ảnh từ file upload
+            if ($file != null) {
                 $image = $book->getBookImage();
-                //B4: đặt tên mới cho ảnh
                 $imgName = uniqid();
-                //B5: lấy extension của file ảnh
                 $imgExtension = $image->guessExtension();
-                //B6: nối tên mới và extension thành tên file hoàn chỉnh
                 $imageName = $imgName . "." . $imgExtension;
-                //B7: di chuyển ảnh vào thư mục project
                 try {
                     $image->move($this->getParameter('BookImage'), $imageName);
                 } catch (FileException $e) {
                     throwException($e);
                 }
-                //B8: lưu tên ảnh vào DB
                 $book->setBookImage($imageName);
             }
             
@@ -185,7 +166,7 @@ class BookController extends AbstractController
      * @Route("/search", name="search_book")
      */
     public function searchBookByTitle (BookRepository $bookRepository, Request $request) {
-        $title = $request->get("title");
+        $title = $request->get("searchContent");
         $books = $bookRepository->searchByTitle($title);
         return $this->render("book/index.html.twig",
         [

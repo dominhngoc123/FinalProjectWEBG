@@ -154,9 +154,9 @@
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -176,7 +176,7 @@
                   </div>
                   <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -194,9 +194,9 @@
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
@@ -214,9 +214,9 @@
                       <a href="{{path('product_detail', {'id': a.id})}}" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{a.BookTitle}}</a></h3>
+                  <h3><a href="{{path('product_detail', {'id': a.id})}}">{{a.BookTitle}}</a></h3>
                   <div class="pi-price">${{a.BookPrice}}</div>
-                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{{ path('add_to_cart', {'bookId': a.id}) }}" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
               {% endfor %}
