@@ -125,7 +125,7 @@
                   <label class="control-label">Sort&nbsp;By:</label>
                   <select class="form-control input-sm">
                     <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                    <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+                    <option value="{{path('search_book_by_title')}}?sort=pd.name&amp;order=ASC"><a href="{{path('search_book_by_title')}}">Name (A - Z)</a></option>
                     <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
                     <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
                     <option value="#?sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
