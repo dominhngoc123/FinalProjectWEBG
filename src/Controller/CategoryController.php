@@ -116,8 +116,9 @@ class CategoryController extends AbstractController
     /**
      * @Route("/search", name="search_category_by_name")
      */
-    public function searchCate(CategoryRepository $categoryRepository, $category_name)
+    public function searchCate(CategoryRepository $categoryRepository, Request $request)
     {
+        $category_name = $request->get("category_name");
         $categories = $categoryRepository->searchCateByName($category_name);
         return $this->render("category/index.html.twig", [
             'categories' => $categories
