@@ -1,5 +1,61 @@
 {% extends 'clientBase.html.twig' %}
 {% block title %}List Products{% endblock %}
+{% block navigation %}
+        <!-- BEGIN NAVIGATION -->
+        <div class="header-navigation">
+          <ul>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
+                Type      
+              </a>            
+              <!-- BEGIN DROPDOWN MENU -->
+              <ul class="dropdown-menu">
+                {% if types != null %}
+                 {% for type in types %}
+                <li><a href="{{path('type_detail', {'id': type.id})}}">{{type.TypeName}}</a></li>
+                {% endfor %}
+              {% endif %}
+              </ul>
+              <!-- END DROPDOWN MENU -->
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
+                Category 
+                
+              </a>
+                
+              <ul class="dropdown-menu">
+              {% if categories != null %}
+                 {% for category in categories %}
+                <li><a href="{{path('category_detail', {'id': category.id})}}">{{category.CategoryName}}</a></li>
+              {% endfor %}
+              {% endif %}
+              </ul>
+            </li>
+            <!-- BEGIN TOP SEARCH -->
+            <li class="menu-search">
+              <span class="sep"></span>
+              <i class="fa fa-search search-btn"></i>
+              <div class="search-box">
+                <form action="{{path('search_book_by_title')}}" method="POST">
+                  <div class="input-group">
+                    <input type="text" placeholder="Search" name="title" class="form-control">
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary" type="submit">Search</button>
+                    </span>
+                  </div>
+                </form>
+              </div> 
+            </li>
+            <!-- END TOP SEARCH -->
+          </ul>
+        </div>
+
+        <!-- END NAVIGATION -->
+      </div>
+    </div>
+    <!-- Header END -->
+  {% endblock %}
 {% block slider %}{% endblock %}
  {% block new %}{% endblock %}
  {% block productHot %}
@@ -80,7 +136,7 @@
                                  </ul>
                              </div>
                          </div>
-                         <button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button>
+                         <a class="btn btn-default" type="submit" href="{{path('home')}}">Continue shopping <i class="fa fa-shopping-cart"></i></a>
                          <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
                      </div>
                  </div>
@@ -88,101 +144,36 @@
              </div>
              <!-- END SIDEBAR & CONTENT -->
 
-             <!-- BEGIN SIMILAR PRODUCTS -->
-             <div class="row margin-bottom-40">
-                 <div class="col-md-12 col-sm-12">
-                     <h2>Most popular products</h2>
-                     <div class="owl-carousel owl-carousel4">
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                                 <div class="sticker sticker-new"></div>
-                             </div>
-                         </div>
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress2</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                             </div>
-                         </div>
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress3</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                             </div>
-                         </div>
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress4</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                                 <div class="sticker sticker-sale"></div>
-                             </div>
-                         </div>
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress5</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                             </div>
-                         </div>
-                         <div>
-                             <div class="product-item">
-                                 <div class="pi-img-wrapper">
-                                     <img src="../../assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                     <div>
-                                         <a href="../../assets/frontend/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                                         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                                     </div>
-                                 </div>
-                                 <h3><a href="shop-item.html">Berry Lace Dress6</a></h3>
-                                 <div class="pi-price">$29.00</div>
-                                 <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-             <!-- END SIMILAR PRODUCTS -->
+              <!-- BEGIN SIMILAR PRODUCTS -->
+        <div class="row margin-bottom-40">
+          <div class="col-md-12 col-sm-12">
+            <h2>Most popular products</h2>
+            <div class="owl-carousel owl-carousel4">          
+            {% if populars != null %}
+                 {% for popular in populars %}              
+              <div>
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{% if popular.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ popular.bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}" class="img-responsive img-popular" alt="{{popular.BookTitle}}">
+                    <div>
+                      <a href="{{path('product_detail', {'id': popular.id})}}" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="shop-item.html">{{popular.BookTitle}}</a></h3>
+                  <div class="pi-price">${{popular.BookPrice}}</div>
+                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+               {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <!-- END SIMILAR PRODUCTS -->
          </div>
      </div>
  {% endblock %}

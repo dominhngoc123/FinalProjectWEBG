@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\BookRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\TypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -16,9 +18,12 @@ class CartController extends AbstractController
     /**
      * @Route("/", name="view_cart")
      */
-    public function index(SessionInterface $session, BookRepository $bookRepository): Response
+    public function index(SessionInterface $session, BookRepository $bookRepository,CategoryRepository $categoryRepository, TypeRepository $typeRepository): Response
     {
         $cart = $session->get('cart', []);
+        $populars = $bookRepository->getPopularProduct();
+        $category = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
         if ($cart != null)
         {
             $cartWithData = [];
@@ -44,6 +49,9 @@ class CartController extends AbstractController
             }
             return $this->render('cart/index.html.twig', [
                 'items' => $cartWithData,
+                'populars' => $populars,
+                'types' => $type,
+                'categories' => $category,
                 'total' => $total,
                 'message' => ''
             ]);
