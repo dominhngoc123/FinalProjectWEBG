@@ -152,4 +152,84 @@ class UserController extends AbstractController
             'users' => $users
         ]);
     }
+
+    /**
+     * @Route("/sort/fullname/asc", name="sort_by_full_name_asc")
+     */
+    public function sortByFullnameASC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByFullNameASC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/fullname/desc", name="sort_by_full_name_desc")
+     */
+    public function sortByFullnameDESC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByFullNameDESC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/email/asc", name="sort_by_email_asc")
+     */
+    public function sortByEmailASC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByEmailASC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/email/desc", name="sort_by_email_desc")
+     */
+    public function sortByEmailDESC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByEmailDESC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/username/asc", name="sort_by_username_asc")
+     */
+    public function sortByUsernameASC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByUsernameASC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/username/desc", name="sort_by_username_desc")
+     */
+    public function sortByUsernameDESC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByUsernameDESC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/roles/asc", name="sort_by_roles_asc")
+     */
+    public function sortByRolesASC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByRolesASC()
+        ]);
+    }
+
+    /**
+     * @Route("/sort/roles/desc", name="sort_by_roles_desc")
+     */
+    public function sortByRolesDESC(UserRepository $repository)
+    {
+        return $this->render("user/index.html.twig", [
+            'users' => $repository->sortUserByRolesDESC()
+        ]);
+    }
 }

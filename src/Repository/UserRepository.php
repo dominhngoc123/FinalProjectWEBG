@@ -69,6 +69,91 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[] Returns an array of User objects
      */
+    public function sortUserByFullNameASC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.UserFullName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByFullNameDESC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.UserFullName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByUsernameASC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.username', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByUsernameDESC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.username', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByEmailASC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.UserEmail', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByEmailDESC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.UserEmail', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByRolesASC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.roles', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function sortUserByRolesDESC()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.roles', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findByExampleField($value)
     {
