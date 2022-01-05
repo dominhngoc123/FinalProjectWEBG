@@ -49,9 +49,9 @@ class OrderDetailController extends AbstractController
     /**
      * @Route("/{id}/update", name="update_order_detail")
      */
-    public function update(Request $request, Order $order, $id): Response
+    public function update(Request $request, $id): Response
     {
-        $orderDetail = $this->getDoctrine()->getRepository()->find($id);
+        $orderDetail = $this->getDoctrine()->getRepository(OrderDetail::class)->find($id);
         if ($orderDetail != null)
         {
             $form = $this->createForm(OrderDetailType::class, $orderDetail);
@@ -61,15 +61,22 @@ class OrderDetailController extends AbstractController
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($orderDetail);
                 $manager->flush();
-                $this->addFlash('success', 'Update order success');
+                $this->addFlash('success', 'Update order detail success');
+                return $this->redirectToRoute('view_order', [
+                    'id' => $orderDetail->getOrder()->getID(),
+                ], Response::HTTP_SEE_OTHER);
             }
+            return $this->renderForm('order_detail/edit.html.twig', [
+                'orderDetail' => $orderDetail,
+                'orderDetailForm' => $form,
+            ]);
         }
         else
         {
             $this->addFlash('error', 'Order detail does not exist');
         }
         return $this->redirectToRoute('view_order', [
-            'order' => $order
+            'id' => $orderDetail->getOrder()->getID(),
         ], Response::HTTP_SEE_OTHER);
     }
 

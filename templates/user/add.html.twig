@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Add{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('user') }}">User</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Add
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    <div class="container col-md-6 mt-3 mb-3">
+        <h2 class="text-center">Add New User</h2>
+        <div class="col md-6"></div>
+        {{ form_start (userForm) }}
+        <p>
+            Enter your personal details below:
+        </p>
+        <div class="form-group">
+            {{ form_label(userForm.user_full_name) }}
+            {{ form_row(userForm.user_full_name, {
+                label: false
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.user_address) }}
+            {{ form_row(userForm.user_address, {
+                label: false
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.user_phone) }}
+            {{ form_row(userForm.user_phone, {
+                label: false
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.user_DOB) }}
+            {{ form_row(userForm.user_DOB, {
+                label: false
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.user_email) }}
+            {{ form_row(userForm.user_email, {
+                label: false
+            }) }}
+        </div>
+        <p>
+            Enter your account details below:
+        </p>
+        <div class="form-group">
+            {{ form_label(userForm.username) }}
+            {{ form_row(userForm.username, {label: false}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(userForm.password) }}
+            {{ form_row(userForm.password, {
+                label: false
+            }) }}
+        </div>
+        <div class="form-group text-center mt-3">
+            <input class="btn btn-primary" type="submit" value="Add" />
+        </div>
+    </div>
+{% endblock %}
+

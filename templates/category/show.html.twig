@@ -8,7 +8,7 @@
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ path('category') }}">category</a>
+            <a href="{{ path('category') }}">Category</a>
         </li>
         <li class="breadcrumb-item active">
             Detail
@@ -25,18 +25,29 @@
                     <div class="card profile-header">
                         <div class="body">
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-12">
+                                <div class="col-lg-2 col-md-2">
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-12">
-                                    <div class="information-detail" style="height: 300px;">
-                                        <h4 class="m-t-0 m-b-0">{{ category.CategoryName }}</h4>
-                                        <span class="job_post">{{ category.CreateAt ? category.CreateAt|date('d-m-Y') : '' }}</span>
-                                        <p>{{ category.CategoryDescription }}</p>
+                                    <div class="information-detail" style="height: auto;">
+                                        <div class="form-group">
+                                            <h4 class="m-t-0 m-b-0">Category name:</h4>
+                                            <input type="text" class="form-control" readonly value="{{ category.CategoryName }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <h4 class="m-t-0 m-b-0">Category description:</h4>
+                                            <textarea class="form-control" readonly="true">{{ category.CategoryDescription }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <h4 class="m-t-0 m-b-0">Create at:</h4>
+                                            <input type="text" class="form-control" readonly value="{{ category.CreateAt ? category.CreateAt|date('d-m-Y') : '' }}">
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                                            <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('delete_category', {'id': category.id}) }}" onclick="return confirm('Do you want to delete category{{ category.CategoryName }}')"><i class="fa fa-trash"></i>Delete</a>
+                                        </div>
                                     </div>
-                                    <div class="float-md-right ">
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i>Edit</a>
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('delete_category', {'id': category.id}) }}" onclick="return confirm('Do you want to delete category{{ category.CategoryName }}')"><i class="fa fa-trash"></i>Delete</a>
-                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
                                 </div>
                             </div>
                         </div>

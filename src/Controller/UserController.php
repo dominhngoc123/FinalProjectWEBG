@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -28,6 +29,63 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'users' => $repository->findAll()
         ]);
+    }
+
+    /**
+     * @Route("/add", name="add_user")
+     */
+    public function addUser(Request $request, UserPasswordHasherInterface $encoder): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted())
+        {
+            $user->setRoles(['ROLE_USER']);
+            $user->setUsername($form->get('username')->getData());
+            $user->setUserFullName($form->get('user_full_name')->getData());
+            $user->setUserAddress($form->get('user_address')->getData());
+            $user->setUserDOB(\DateTime::createFromFormat('Y-m-d', $form->get('user_DOB')->getData()->format('Y-m-d')));
+            $user->setUserEmail($form->get('user_email')->getData());
+            $user->setUserPhone($form->get('user_phone')->getData());
+            $user->setPassword(
+                $encoder->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $user->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+            //Cứ bổ sung dòng này sau này thay thế bằng data từ session
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $user->setCreateBy($security->getUser()->getUserFullName());
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash('success', 'Add user success');
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('user/add.html.twig', [
+            'userForm' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/upgrade", name="upgrade_user", methods={"GET", "POST"})
+     */
+    public function upgradeUser($id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        if ($user != null)
+        {
+            $user->setRoles(['ROLE_ADMIN']);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Upgrade user success');
+        }
+        else
+        {
+            $this->addFlash('error', 'User does not exist');
+        }
+        return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

@@ -44,9 +44,10 @@
                                             {% endif %}</span>
                                     </div>
                                     <div class="float-md-right ">
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_user', {'id': user.id}) }}"><i class="fa fa-edit"></i>Edit</a>
-                                        {% if user.Roles == '["ROLE_USER"]' %}
-                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('delete_user', {'id': user.id}) }}" onclick="return confirm('Do you want to delete this user?')"><i class="fa fa-trash"></i>Delete</a>
+                                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('update_user', {'id': user.id}) }}"><i class="fa fa-edit"></i> Edit</a>
+                                        {% if 'ROLE_USER' in user.Roles %}
+                                        <a class="btn btn-danger custom-btn" style="text-decoration: none;" href="{{ path('delete_user', {'id': user.id}) }}" onclick="return confirm('Do you want to delete this user?')"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="btn btn-secondary" style="text-decoration: none;" href="{{ path('upgrade_user', {'id': user.id}) }}" onclick="return confirm('Do you want to upgrade this user to admin privilege?')"><i class="fa fa-arrow-up"></i> Upgrade</a>
                                         {% endif %}
                                     </div>
                                 </div>

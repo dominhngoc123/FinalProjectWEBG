@@ -113,9 +113,10 @@ class BookFormType extends AbstractType
                         'Popular Product' => 'POPULAR',
                     ],
                     'attr' => [
-                        'class' => 'radio-btn'
+                        'class' => 'slt_type form-control',
                     ],
-                    'expanded' => true
+                    'multiple' => false,
+                    'expanded' => false,
                 ])
             ->add('BookImage', FileType::class, [
                 'data_class' => null,

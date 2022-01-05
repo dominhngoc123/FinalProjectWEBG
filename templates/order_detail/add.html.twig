@@ -8,7 +8,7 @@
             <a href="{{ path('index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ path('order') }}">Order</a>
+            <a href="{{ path('order') }}">Order Detail</a>
         </li>
         <li class="breadcrumb-item active">
             Add
@@ -27,34 +27,79 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container col-md-6 mt-3 mb-3">
-        <h2 class="text-center">Add Order Detail</h2>
-        <div class="col md-6"></div>
-        {{ form_start (orderDetailForm) }}
-        <div class="form-group">
-            {{ form_label (orderDetailForm.Book) }}
-            {{ form_widget (orderDetailForm.Book) }}
-        </div>
-        <div class="form-group">
-            {{ form_label (orderDetailForm.Quantity) }}
-            {{ form_widget (orderDetailForm.Quantity ,
-                {
-                    'attr' : {'class' : 'form-control'}
-                })
-            }}
-        </div>
-        <div class="form-group text-center mt-3">
-            <a class="btn btn-info" href="{{ path('order') }}">Cancel</a>
-            <input class="btn btn-primary" type="submit" value="Add" />
-        </div>
-        {{ form_end (orderDetailForm)}}
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $(".slt_type").select2({
-                    dropdownPosition: 'below'
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xs-6">
+            <h2 class="text-center">Add Order Detail</h2>
+            <div class="col md-6"></div>
+            {{ form_start (orderDetailForm) }}
+            <div class="form-group">
+                {{ form_label (orderDetailForm.Book) }}
+                {{ form_widget (orderDetailForm.Book) }}
+            </div>
+            <div class="form-group">
+                {{ form_label (orderDetailForm.Quantity) }}
+                {{ form_widget (orderDetailForm.Quantity ,
+                    {
+                        'attr' : {'class' : 'form-control'}
+                    })
+                }}
+            </div>
+            <div class="form-group text-center mt-3">
+                <a class="btn btn-info" href="{{ path('order') }}">Finish</a>
+                <input class="btn btn-primary" type="submit" value="Add" />
+            </div>
+            {{ form_end (orderDetailForm)}}
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $(".slt_type").select2({
+                        dropdownPosition: 'below'
+                    });
                 });
-            });
-        </script>
+            </script>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xs-6">
+            <h2 class="text-center">Products ordered</h2>
+            <br/>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th width="50px;">No.</th>
+                        <th width="200px;">Book</th>
+                        <th width="100px;">Price</th>
+                        <th width="100px;">Quantity</th>
+                        <th width="100px;">Total</th>
+                        <th width="50px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if orderDetails != null %}
+                    {% set orderNum = 1 %}
+                    {% set total = 0 %}
+                    {% for item in orderDetails %}
+                        <tr>
+                            <td>{{ orderNum }}</td>
+                            {% set orderNum = orderNum + 1 %}
+                            <td><a href="{{ path('book_detail', {'id' : item.Book.ID}) }}">{{ item.Book.BookTitle }}</a></td>
+                            <td>{{ item.CurrentPrice }}</td>
+                            <td>{{ item.Quantity }}</td>
+                            {% set total = total + item.CurrentPrice * item.Quantity %}
+                            <td>{{ item.CurrentPrice * item.Quantity }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('remove_order_detail', {'id': item.ID}) }}" onclick="return confirm('Do you want to delete this product from order')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total order:</td>
+                        <td>{{ total }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
 

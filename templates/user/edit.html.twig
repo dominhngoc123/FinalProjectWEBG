@@ -40,7 +40,7 @@
         <div class="form-group text-center mt-3">
             <input class="btn btn-primary" type="submit" value="Edit" />
         </div>
-        {{ form_end (userForm)}}
+        {{ form_end (userForm, {'render_rest': false})}}
     </div>
 </div>
 {% endblock %}

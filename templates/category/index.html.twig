@@ -52,7 +52,7 @@
             </th>
             <th class="description">Category description
             </th>
-            <th class="Action">Action
+            <th class="Action" style="text-align: center">Action
             </th>
         </tr>
         </thead>
@@ -65,9 +65,10 @@
                     {% set orderNum = orderNum + 1 %}
                     <td data-label="Name" class="name">{{ category.CategoryName }}</td>
                     <td data-label="Description" class="description">{{ category.CategoryDescription }}</td>
-                    <td data-label="Action" class="action">
-                        <a class="btn btn-primary custom-btn" style="text-decoration: none;" href="{{ path('show_category', {'id': category.id}) }}"><i class="fa fa-eye"></i>Detail</a>
-                        <a class="btn btn-info custom-btn" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i>Edit</a>
+                    <td data-label="Action" class="action" style="text-align: center;">
+                        <a class="btn btn-primary" style="text-decoration: none;" href="{{ path('show_category', {'id': category.id}) }}"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-info" style="text-decoration: none;" href="{{ path('update_category', {'id': category.id}) }}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger" style="text-decoration: none;" href="{{ path('delete_category', {'id': category.id}) }}" onclick="return confirm('Do you want to delete category{{ category.CategoryName }}')"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             {% endfor %}

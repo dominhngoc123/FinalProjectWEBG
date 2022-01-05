@@ -33,9 +33,14 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo">
-    <a href="index.html">
-        <img src="{{asset('assets/img/logo-big.png')}}" alt=""/>
+    <a href="{{ path('app_login') }}">
+        <img src="{{asset('assets/img/logo-big.png')}}" alt="" style="width: 100px;"/>
     </a>
+    <h3 class="text-info" style="font-weight: 900;">
+        {% block imageContent %}
+
+        {% endblock %}
+    </h3>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->

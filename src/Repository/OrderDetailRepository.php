@@ -25,11 +25,24 @@ class OrderDetailRepository extends ServiceEntityRepository
     public function findOrderDetailByOrder($orderID)
     {
         return $this->createQueryBuilder('od')
-            ->andWhere('od.book = :val')
+            ->andWhere('od.order = :val')
             ->setParameter('val', $orderID)
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return OrderDetail[] Returns an array of OrderDetail objects
+     */
+    public function findOrderDetailByBook($bookID)
+    {
+        return $this->createQueryBuilder('od')
+            ->andWhere('od.book = :val')
+            ->setParameter('val', $bookID)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     /*

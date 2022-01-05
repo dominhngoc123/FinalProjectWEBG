@@ -194,6 +194,10 @@ caption {
     width: 10% !important;
 }
 
+.sort-table th.th-15 {
+    width: 15% !important;
+}
+
 .sort-table th.name, .sort-table th.transaction-date, .sort-table th.total {
     width: 20% !important;
 }
@@ -203,7 +207,7 @@ caption {
 }
 
 .sort-table th.action {
-    width: 30% !important;
+    width: 15% !important;
 }
 
 .sort-table .order-number {

@@ -57,6 +57,20 @@ class UserType extends AbstractType
                         'placeholder' => 'Email'
                     ]
                 ])
+                ->add('username', TextType::class, [
+                    'required' => true,
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Username'
+                    ]
+                ])
+                ->add('password', PasswordType::class, [
+                    'required' => true,
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Password'
+                    ]
+                ])
         ;
     }
 

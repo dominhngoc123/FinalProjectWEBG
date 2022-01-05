@@ -15,7 +15,7 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('User', EntityType::class, [
-                'label' => 'User name',
+                'label' => 'Customer name',
                 'class' => User::class,
                 'choice_label' => 'UserFullName',
                 'multiple' => false,

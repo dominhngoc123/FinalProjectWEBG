@@ -24,7 +24,7 @@ class AuthorType extends AbstractType
                 ]
             ])
             ->add('AuthorStageName', TextType::class, [
-                'label' => 'Author name',
+                'label' => 'Author stage name',
                 'required' => true,
                 'attr' =>
                     [
