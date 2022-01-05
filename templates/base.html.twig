@@ -21,6 +21,9 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}" type="text/css">
     {% endblock %}
+    {% block additionalCSS %}
+
+    {% endblock %}
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation-->
@@ -80,7 +83,7 @@
                         <a href="#"><i class="fa fa-fw fa-id-card"></i><span class="nav-link-text"> Profile</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-cogs"></i><span class="nav-link-text"> Settings</span></a>
+                        <a href="{{ path('home') }}"><i class="fa fa-fw fa-cogs"></i><span class="nav-link-text"> Go to client website</span></a>
                     </li>
                     <li>
                         <a href="{{ path('app_logout') }}"><i class="fa fa-fw fa-sign-out"></i><span class="nav-link-text"> Sign out</span></a>
@@ -343,13 +346,13 @@
 {% endblock %}
     {% else %}
         <script>
-            window.location.href = "../home";
+            location.assign("{{ path('home') }}");
         </script>
     {% endif %}
 {% else %}
     <script>
         alert("You have to login to continue using admin feature");
-        window.location.href = "../login";
+        location.assign("{{ path('app_login') }}");
     </script>
 {% endif %}
 </html>

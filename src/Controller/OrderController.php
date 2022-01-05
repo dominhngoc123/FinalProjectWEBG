@@ -165,4 +165,48 @@ class OrderController extends AbstractController
             'orders' => $orders
         ]);
     }
+
+    /**
+     * @Route("/sort-by-customer-name-desc", name="sort_by_customer_name_desc")
+     */
+    public function sortByCustomerNameDESC(OrderRepository $repository)
+    {
+        $orders = $repository->sortByCustomerNameDESC();
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    /**
+     * @Route("/sort-by-customer-name-asc", name="sort_by_customer_name_asc")
+     */
+    public function sortByCustomerNameASC(OrderRepository $repository)
+    {
+        $orders = $repository->sortByCustomerNameASC();
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    /**
+     * @Route("/sort-by-date-asc", name="sort_by_date_asc")
+     */
+    public function sortByDateASC(OrderRepository $repository)
+    {
+        $orders = $repository->sortByDateASC();
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    /**
+     * @Route("/sort-by-date-desc", name="sort_by_date_desc")
+     */
+    public function sortByDateDESC(OrderRepository $repository)
+    {
+        $orders = $repository->sortByDateDESC();
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
 }

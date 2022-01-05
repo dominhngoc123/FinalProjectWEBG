@@ -40,7 +40,7 @@ class OrderRepository extends ServiceEntityRepository
     public function sortByDateASC()
     {
         return $this->createQueryBuilder('o')
-            ->orderBy('CreateAt', 'ASC')
+            ->orderBy('o.CreateAt', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -51,8 +51,38 @@ class OrderRepository extends ServiceEntityRepository
     public function sortByDateDESC()
     {
         return $this->createQueryBuilder('o')
-            ->orderBy('CreateAt', 'DESC')
+            ->orderBy('o.CreateAt', 'DESC')
             ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function sortByCustomerNameASC()
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT o 
+                FROM App\Entity\Order o
+                JOIN App\Entity\User u WITH o.User = u
+                ORDER BY u.UserFullName ASC
+            ")
+            ->getResult();
+    }
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function sortByCustomerNameDESC()
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT o 
+                FROM App\Entity\Order o
+                JOIN App\Entity\User u WITH o.User = u
+                ORDER BY u.UserFullName DESC
+            ")
             ->getResult();
     }
 
