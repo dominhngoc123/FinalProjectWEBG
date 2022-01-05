@@ -126,6 +126,28 @@ class TypeController extends AbstractController
             'types' => $types
         ]);
     }
+
+    /**
+     * @Route("/sort/typename/desc", name="sort_type_by_name_desc")
+     */
+    public function sortTypeNameDesc(TypeRepository $typeRepository,): Response
+    {
+        $types = $typeRepository->sortTypeNameDesc();
+        return $this->render("type/index.html.twig", [
+            'types' => $types
+        ]);
+    }
+
+    /**
+     * @Route("/sort/typename/asc", name="sort_type_by_name_asc")
+     */
+    public function sortTypeNameAsc(TypeRepository $typeRepository,): Response
+    {
+        $types = $typeRepository->sortTypeNameAsc();
+        return $this->render("type/index.html.twig", [
+            'types' => $types
+        ]);
+    }
 }
 
 
