@@ -58,6 +58,27 @@ class TypeRepository extends ServiceEntityRepository
             ->orderBy('typeName.TypeName', 'ASC')
             ->getQuery(5)
             ->getResult();
+    }
 
+    /**
+     * @return Type[] 
+     */
+    public function sortTypeNameAsc()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.TypeName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Type[] 
+     */
+    public function sortTypeNameDesc()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.TypeName', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }
