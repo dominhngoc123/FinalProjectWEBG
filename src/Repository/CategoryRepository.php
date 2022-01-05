@@ -61,4 +61,26 @@ class CategoryRepository extends ServiceEntityRepository
                     ->getResult();
 
     }
+
+    /**
+     * @return Category[] 
+     */
+    public function sortCateNameAsc()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.CategoryName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Category[] 
+     */
+    public function sortCateNameDesc()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.CategoryName', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

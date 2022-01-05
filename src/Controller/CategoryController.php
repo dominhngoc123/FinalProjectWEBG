@@ -125,4 +125,26 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/sort/catename/desc", name="sort_category_by_name_desc")
+     */
+    public function sortCateNameDesc(CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->sortCateNameDesc();
+        return $this->render("category/index.html.twig", [
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/sort/catename/asc", name="sort_category_by_name_asc")
+     */
+    public function sortCateNameAsc(CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->sortCateNameAsc();
+        return $this->render("category/index.html.twig", [
+            'categories' => $categories
+        ]);
+    }
 }
+
