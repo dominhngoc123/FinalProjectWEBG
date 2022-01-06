@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
+use App\Entity\OrderDetail;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TypeRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,7 +62,10 @@ class CartController extends AbstractController
         }
         return $this->render('cart/index.html.twig', [
             'message' => 'No item in cart',
-            'total' => 0
+            'total' => 0,
+            'populars' => $populars,
+            'types' => $type,
+            'categories' => $category,
         ]);
     }
 
@@ -115,5 +122,52 @@ class CartController extends AbstractController
         }
         $session->set('cart', $cart);
         return $this->redirectToRoute('view_cart');
+    }
+
+    /**
+     * @Route("/checkout", name="checkout")
+     */
+    public function checkout(SessionInterface $session, Request $request, BookRepository $bookRepository, UserRepository $userRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository): Response
+    {
+        $cart = $session->get('cart', []);
+        $populars = $bookRepository->getPopularProduct();
+        $category = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($cart == null)
+        {
+            $this->addFlash('error', 'Cart is empty');
+        }
+        else
+        {
+            $order = new Order();
+            $security = unserialize($request->getSession()->get("_security_main"));
+            $user = $userRepository->find($security->getUser()->getID());
+            $order->setUser($user);
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $order->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+            $order->setCreateBy($security->getUser()->getUserFullName());
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($order);
+            foreach ($cart as $key => $value)
+            {
+                $book = $bookRepository->find($key);
+                $orderDetail = new OrderDetail();
+                $orderDetail->setCurrentPrice($book->getBookPrice());
+                $orderDetail->setOrder($order);
+                $orderDetail->setBook($book);
+                $orderDetail->setQuantity($value);
+                $manager->persist($orderDetail);
+            }
+            $manager->flush();
+            $this->addFlash('success', 'Create order success');
+            $cart = $session->set('cart', []);
+        }
+        return $this->redirectToRoute('view_cart', [
+            'message' => 'No item in cart',
+            'total' => 0,
+            'populars' => $populars,
+            'types' => $type,
+            'categories' => $category,
+        ]);
     }
 }
