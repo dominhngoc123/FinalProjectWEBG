@@ -92,6 +92,28 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+        /**
+     * @return Book[]
+     */
+    public function sortBookAsc() {
+        return $this->createQueryBuilder('book')
+                    ->orderBy('book.BookTitle', 'ASC')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
+     /**
+     * @return Book[]
+     */
+    public function sortBookDesc() {
+        return $this->createQueryBuilder('book')
+                    ->orderBy('book.BookTitle', 'DESC')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
     // /**
     //  * @return Book[] Returns an array of Book objects
     //  */
