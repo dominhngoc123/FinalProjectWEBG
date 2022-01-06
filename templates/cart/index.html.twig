@@ -10,7 +10,7 @@
               </a>            
               <!-- BEGIN DROPDOWN MENU -->
               <ul class="dropdown-menu">
-                {% if types != null %}
+                {% if types is defined %}
                  {% for type in types %}
                 <li><a href="{{path('type_detail', {'id': type.id})}}">{{type.TypeName}}</a></li>
                 {% endfor %}
@@ -25,7 +25,7 @@
               </a>
                 
               <ul class="dropdown-menu">
-              {% if categories != null %}
+              {% if categories is defined %}
                  {% for category in categories %}
                 <li><a href="{{path('category_detail', {'id': category.id})}}">{{category.CategoryName}}</a></li>
               {% endfor %}
@@ -159,7 +159,7 @@
           <div class="col-md-12 col-sm-12">
             <h2>Most popular products</h2>
             <div class="owl-carousel owl-carousel4">          
-            {% if populars != null %}
+            {% if populars is defined %}
                  {% for popular in populars %}              
               <div>
                 <div class="product-item">

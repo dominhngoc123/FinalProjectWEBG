@@ -16,7 +16,7 @@ class AuthorFixtures extends Fixture
         $author->setAuthorDescription('Ernest Miller Hemingway was an American novelist.');
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $author->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $author->setCreateBy('Đỗ Minh Ngọc');
+        $author->setCreateBy('Bùi Thị Trang');
         $manager->persist($author);
 
         $author1 = new Author();
@@ -24,7 +24,7 @@ class AuthorFixtures extends Fixture
         $author1->setAuthorStageName('Mark Twain');
         $author1->setAuthorDescription('An American writers.');
         $author1->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $author1->setCreateBy('Đỗ Minh Ngọc');
+        $author1->setCreateBy('Bùi Thị Trang');
         $manager->persist($author1);
 
         $author2 = new Author();
@@ -32,7 +32,7 @@ class AuthorFixtures extends Fixture
         $author2->setAuthorStageName('J.K.Rowling');
         $author2->setAuthorDescription('A British author.');
         $author2->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $author2->setCreateBy('Đỗ Minh Ngọc');
+        $author2->setCreateBy('Bùi Thị Trang');
         $manager->persist($author2);
 
         $author3 = new Author();
@@ -40,7 +40,7 @@ class AuthorFixtures extends Fixture
         $author3->setAuthorStageName('Leo Tolstoy');
         $author3->setAuthorDescription('A Russian author.');
         $author3->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $author3->setCreateBy('Đỗ Minh Ngọc');
+        $author3->setCreateBy('Bùi Thị Trang');
         $manager->persist($author3);
 
         $author4 = new Author();
@@ -48,7 +48,7 @@ class AuthorFixtures extends Fixture
         $author4->setAuthorStageName('William Shakespeare');
         $author4->setAuthorDescription('An English author.');
         $author4->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $author4->setCreateBy('Đỗ Minh Ngọc');
+        $author4->setCreateBy('Bùi Thị Trang');
         $manager->persist($author4);
         // $product = new Product();
         // $manager->persist($product);

@@ -153,10 +153,10 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/sort/id/asc", name="sort_book_id_asc")
+     * @Route("/sort/asc", name="sort_book_asc")
      */
     public function sortBookByIdAsc (BookRepository $bookRepository) {
-        $books = $bookRepository->sortBookIdAsc();
+        $books = $bookRepository->sortBookAsc();
         return $this->render("book/index.html.twig",
         [
             'books' => $books
@@ -164,10 +164,10 @@ class BookController extends AbstractController
     }
 
      /**
-     * @Route("/sort/id/desc", name="sort_book_id_desc")
+     * @Route("/sort/desc", name="sort_book_desc")
      */
     public function sortBookByIdDesc (BookRepository $bookRepository) {
-        $books = $bookRepository->sortBookIdDesc();
+        $books = $bookRepository->sortBookDesc();
         return $this->render("book/index.html.twig",
         [
             'books' => $books
