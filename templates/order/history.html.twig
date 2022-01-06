@@ -50,25 +50,7 @@
                     </a>
                 </div>
             </th>
-            <th class="transaction-date">Transaction date
-                <div class="sort-table-arrows">
-                    <a href="{{ path('sort_by_date_asc') }}" style="text-decoration: none;">
-                        <button class="button" title="Sort Ascending"><i class="fa fa-chevron-down"></i></button>
-                    </a>
-                    <a href="{{ path('sort_by_date_desc') }}" style="text-decoration: none;">
-                        <button class="button" title="Sort Descending"><i class="fa fa-chevron-up"></i></button>
-                    </a>
-                </div>
-            </th>
-            <th class="th-15">Status
-                <div class="sort-table-arrows">
-                    <a href="#" style="text-decoration: none;">
-                        <button class="button" title="Sort Ascending"><i class="fa fa-chevron-down"></i></button>
-                    </a>
-                    <a href="#" style="text-decoration: none;">
-                        <button class="button" title="Sort Descending"><i class="fa fa-chevron-up"></i></button>
-                    </a>
-                </div>
+            <th class="order-number">Orders
             </th>
             <th class="total">Total
             </th>
@@ -77,26 +59,32 @@
         </tr>
         </thead>
         <tbody>
-        {% if orders != null %}
+        {% if users != null %}
             {% set orderNum = 1 %}
-            {% for order in orders %}
+            {% for user in users %}
                 <tr>
                     <td data-label="Order-Number" class="order-number">{{ orderNum }}</td>
                     {% set orderNum = orderNum + 1 %}
-                    <td data-label="Name" class="name"><a href="{{ path('view_history', {'id': order.User.ID}) }}">{{ order.User.UserFullName }}</a></td>
-                    <td data-label="Transaction date" class="transaction-date">{{ order.CreateAt ? order.CreateAt|date('d-m-Y') : '' }}</td>
+                    <td data-label="Name" class="name">{{ user.UserFullName }}</td>
                     {% set total = 0 %}
-                    {% if order.OrderDetail != null  %}
-                        {% for od in order.OrderDetail %}
-                            {% set total = total + od.CurrentPrice * od.Quantity %}
+                    {% if user.Orders != null %}
+                        <td>{{ user.Orders|length }}</td>
+                        {% for o in user.Orders %}
+                            {% if o.OrderDetail != null  %}
+                                {% for od in o.OrderDetail %}
+                                    {% set total = total + od.CurrentPrice * od.Quantity %}
+                                {% endfor %}
+                            {% endif %}
                         {% endfor %}
+                        <td data-label="Total" class="total">{{ total }}</td>
+                    {% else %}
+                        <td data-label="Total" class="order-number">0</td>
+                        <td data-label="Total" class="total">0</td>
                     {% endif %}
-                    <td data-label="Status" class="th-15">{{ order.Status }}</td>
-                    <td data-label="Total" class="total">{{ total }}</td>
                     <td data-label="Action" class="th-15" style="text-align: center;">
-                        <a class="btn btn-primary" style="text-decoration: none;" href="{{ path('view_order', {'id': order.id}) }}"><i class="fa fa-eye"></i></a>
-                        <a class="btn btn-info" style="text-decoration: none;" href="{{ path('update_order', {'id': order.ID}) }}"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger" style="text-decoration: none;" href="{{ path('delete_order', {'id': order.id}) }}" onclick="return confirm('Do you want to delete this order?')"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-primary" style="text-decoration: none;" href="{{ path('view_detail_history', {'id': user.ID}) }}"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-info" style="text-decoration: none;" href="#"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger" style="text-decoration: none;" href="#" onclick="return confirm('Do you want to delete this order?')"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             {% endfor %}

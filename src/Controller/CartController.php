@@ -146,6 +146,7 @@ class CartController extends AbstractController
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $order->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             $order->setCreateBy($security->getUser()->getUserFullName());
+            $order->setStatus("PENDING");
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($order);
             foreach ($cart as $key => $value)

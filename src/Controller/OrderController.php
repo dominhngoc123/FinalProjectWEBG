@@ -7,6 +7,7 @@ use App\Entity\OrderDetail;
 use App\Form\OrderType;
 use App\Repository\OrderDetailRepository;
 use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,7 @@ class OrderController extends AbstractController
             $order->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
             $security = unserialize($request->getSession()->get("_security_main"));
             $order->setCreateBy($security->getUser()->getUserFullName());
+            $order->setStatus("PENDING");
             // Add vào trong context của symfony (Chưa thêm vào database)
             $manager->persist($order);
             // Flush gọi sẽ thêm order vào database bằng cách tự tạo 1 SQL transaction và thực hiện tự động
@@ -155,6 +157,27 @@ class OrderController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/update/status", name="update_order_status")
+     */
+    public function updateOrderStatus($id, OrderRepository $repository)
+    {
+        $order = $repository->find($id);
+        if ($order->getStatus() == "COMPLETE")
+        {
+            $this->addFlash('error', 'Cannot update order status');
+        }
+        else
+        {
+            $order->setStatus("COMPLETE");
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($order);
+            $manager->flush();
+            $this->addFlash('success', 'Update status success');
+        }
+        return $this->redirectToRoute('order', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * @Route("/search-result", name="search_order_by_creator")
      */
     public function search(Request $request, OrderRepository $repository): Response
@@ -206,6 +229,30 @@ class OrderController extends AbstractController
     {
         $orders = $repository->sortByDateDESC();
         return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    /**
+     * @Route("/history", name="view_history")
+     */
+    public function getOrderHistory(OrderRepository $orderRepository, UserRepository $userRepository)
+    {
+        $users = $orderRepository->getOrderOverview();
+        return $this->render('order/history.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    /**
+     * @Route("{id}/history/detail", name="view_detail_history")
+     */
+    public function getHistoryDetail($id, OrderRepository $orderRepository, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        $orders = $orderRepository->getHistory($id);
+        return $this->render('order/history_detail.html.twig', [
+            'user' => $user,
             'orders' => $orders
         ]);
     }
