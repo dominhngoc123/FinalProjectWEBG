@@ -23,6 +23,7 @@ class HomeController extends AbstractController
             // $books = $this->getDoctrine()->getRepository(Book::class)->findAll();
             $books = $bookRepository->getHotProduct();
             $news = $bookRepository->getNewProduct();
+            $sellers = $bookRepository->getSellerProductHome();
             $category = $categoryRepository->findAll();
             $type= $typeRepository->findAll();
             return $this->render("home/index.html.twig",
@@ -30,6 +31,7 @@ class HomeController extends AbstractController
                 'books' => $books,
                 'news' => $news,
                 'types' => $type,
+                'sellers' => $sellers,
                 'categories' => $category
             ]);
     }
@@ -102,6 +104,101 @@ class HomeController extends AbstractController
         $type= $typeRepository->findAll();
         if ($books == null) {
             $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+    /**
+     * @Route("/hotProductByNameByDesc", name="hot_product_name_desc")
+     */
+    public function getHotProductSortNameDESC(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->sortHotProductByNameDESC();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+    /**
+     * @Route("/hotProductByNameByASC", name="hot_product_name_asc")
+     */
+    public function getHotProductSortNameASC(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->sortHotProductByNameASC();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+    /**
+     * @Route("/hotProductByPriceByASC", name="hot_product_price_asc")
+     */
+    public function getHotProductSortPriceASC(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->sortHotProductByPriceASC();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+    /**
+     * @Route("/hotProductByPriceByDESC", name="hot_product_name_desc")
+     */
+    public function getHotProductSortPriceDESC(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->sortHotProductByPriceDESC();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "Category not exist");
+            return $this->redirectToRoute("home");
+        }
+        return $this->render("product/listProduct.html.twig",
+        [
+            'hots' => $books,
+            'sellers' => $bookRepository->getSellerProduct(),
+            'types' => $type,
+            'categories' => $category1
+        ]);
+    }
+        /**
+     * @Route("/sellerProduct", name="seller_product")
+     */
+    public function getSellerProduct(BookRepository $bookRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository) {
+        $books = $bookRepository->getSellerProductHome();
+        $category1 = $categoryRepository->findAll();
+        $type= $typeRepository->findAll();
+        if ($books == null) {
+            $this->addFlash("Error", "books not exist");
             return $this->redirectToRoute("home");
         }
         return $this->render("product/listProduct.html.twig",

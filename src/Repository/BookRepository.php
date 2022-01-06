@@ -45,6 +45,58 @@ class BookRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+          /**
+     * @return Book[]
+     */
+    public function sortHotProductByPriceDESC () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'HOT')
+            ->orderBy('b.BookPrice','DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+          /**
+     * @return Book[]
+     */
+    public function sortHotProductByPriceASC () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'HOT')
+            ->orderBy('b.BookPrice','ASC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+     /**
+     * @return Book[]
+     */
+    public function sortHotProductByNameDESC () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'HOT')
+            ->orderBy('b.BookTitle','DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+           /**
+     * @return Book[]
+     */
+    public function sortHotProductByNameASC () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'HOT')
+            ->orderBy('b.BookTitle','ASC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
      /**
      * @return Book[]
      */
@@ -54,6 +106,19 @@ class BookRepository extends ServiceEntityRepository
             ->setParameter('val', 'SELLER')
             ->orderBy('b.CreateAt','DESC')
             ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+         /**
+     * @return Book[]
+     */
+    public function getSellerProductHome () {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.type_product = :val')
+            ->setParameter('val', 'SELLER')
+            ->orderBy('b.CreateAt','DESC')
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
             ;

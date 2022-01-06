@@ -129,4 +129,33 @@
             <!-- END PRODUCT LIST -->
   {% endblock %}
   {% block twoItem %}
+     <!-- BEGIN PRODUCT LIST -->
+               <h2>Seller Product</h2>
+               <a href="{{path('seller_product')}}" >More Product</a>
+            <div class="row product-list">
+              <!-- PRODUCT ITEM START -->
+                 {% if sellers != null %}
+                 {% for book in sellers %}
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{% if book.bookImage != null %}
+                                    {{ asset('assets/img/book/' ~ book.bookImage) }}
+                                    {% else %}
+                                    {{ asset('assets/img/no-img/photo-comming-soon.jpg') }}
+                                    {% endif %}
+                                    " class="img-responsive img-hot" alt="{{book.BookTitle}}">
+                    <div>
+                      <a href="{{path('product_detail', {'id': book.id})}}" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="{{path('product_detail', {'id': book.id})}}">{{book.BookTitle}}</a></h3>
+                  <div class="pi-price">${{book.BookPrice }}</div>
+                  <a href="{{ path('add_to_cart', {'bookId': book.id}) }}" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <!-- END PRODUCT LIST -->
           {% endblock %}

@@ -81,4 +81,17 @@ class TypeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+        /**
+     * @return Type
+     */
+    public function typeDetails ($id) {
+        return $this->createQueryBuilder('type')
+                    ->andWhere('type.id = :id')
+                    ->setParameter('id', $id)
+                    ->orderBy('type.','asc')
+                    ->setMaxResults(50)
+                    ->getQuery()
+                    ->getResult()
+                    ;
+    }
 }
