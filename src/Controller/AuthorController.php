@@ -28,7 +28,8 @@ class AuthorController extends AbstractController
     public function index(AuthorRepository $repository): Response
     {
         return $this->render('author/index.html.twig', [
-            'authors' => $repository->findAll()
+            'authors' => $repository->findAll(), 
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 

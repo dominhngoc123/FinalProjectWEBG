@@ -64,6 +64,16 @@ class Author
      */
     private $books;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AuthorGender;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $AuthorDOB;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -195,6 +205,30 @@ class Author
         if ($this->books->removeElement($book)) {
             $book->removeAuthor($this);
         }
+
+        return $this;
+    }
+
+    public function getAuthorGender(): ?string
+    {
+        return $this->AuthorGender;
+    }
+
+    public function setAuthorGender(?string $AuthorGender): self
+    {
+        $this->AuthorGender = $AuthorGender;
+
+        return $this;
+    }
+
+    public function getAuthorDOB(): ?\DateTimeInterface
+    {
+        return $this->AuthorDOB;
+    }
+
+    public function setAuthorDOB(?\DateTimeInterface $AuthorDOB): self
+    {
+        $this->AuthorDOB = $AuthorDOB;
 
         return $this;
     }

@@ -60,6 +60,10 @@
                     </a>
                 </div>
             </th>
+            <th class="order-number">Gender
+            </th>
+            <th class="order-number">Age
+            </th>
             <th class="description">Description
             </th>
             <th class="action" style="text-align: center;">Action
@@ -75,6 +79,13 @@
                     {% set orderNum = orderNum + 1 %}
                     <td data-label="Name" class="name">{{ author.AuthorFullName }}</td>
                     <td data-label="Order-Number" class="name">{{ author.AuthorStageName }}</td>
+                    <td data-label="Order-Number" class="name">{{ author.AuthorGender }}</td>
+                    {% if author.AuthorDOB != null %}
+                    {# {% set difference = date('now').diff(date(author.AuthorDOB))%}
+                    {% set date = difference.years %} #}   
+                    <td data-label="Order-Number" class="name">{{currentyear|date('Y')- author.AuthorDOB|date('Y')}}</td>
+                    {% else %}<td></td>
+                    {% endif %}
                     <td data-label="Order-Number" class="description">{{ author.AuthorDescription }}</td>
                     <td data-label="Action" class="action" style="text-align: center">
                         <a class="btn btn-primary" style="text-decoration: none;" href="{{ path('show_author', {'id': author.id}) }}"><i class="fa fa-eye"></i></a>
