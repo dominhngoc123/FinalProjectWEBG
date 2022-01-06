@@ -15,28 +15,28 @@ class CategoryFixtures extends Fixture
         $category->setCategoryDescription('Love story');
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $category->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $category->setCreateBy('Đỗ Minh Ngọc');
+        $category->setCreateBy('Bùi Thị Trang');
         $manager->persist($category);
 
         $category1 = new Category();
         $category1->setCategoryName('Funny story');
         $category1->setCategoryDescription('Funny story');
         $category1->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $category1->setCreateBy('Đỗ Minh Ngọc');
+        $category1->setCreateBy('Bùi Thị Trang');
         $manager->persist($category1);
 
         $category2 = new Category();
         $category2->setCategoryName('Horror');
         $category2->setCategoryDescription('Frighten, scare, or disgust');
         $category2->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $category2->setCreateBy('Đỗ Minh Ngọc');
+        $category2->setCreateBy('Bùi Thị Trang');
         $manager->persist($category2);
 
         $category3 = new Category();
         $category3->setCategoryName('Fiction');
         $category3->setCategoryDescription('Not real problems.');
         $category3->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
-        $category3->setCreateBy('Đỗ Minh Ngọc');
+        $category3->setCreateBy('Bùi Thị Trang');
         $manager->persist($category3);
         $manager->flush();
     }

@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block title %}View history{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('index') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('order') }}">Order</a>
+        </li>
+        <li class="breadcrumb-item active">
+            History
+        </li>
+    </ol>
+{% endblock %}
+
+{% block display %}
+    <div class="row">
+        <div class="col-md-4 col-lg-4">
+            <h4>User: {{ user.UserFullName }}</h4>
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <table border="1px solid black">
+                <thead>
+                <tr>
+                    <th>Transaction date:</th>
+                    <th>Total</th>
+                    <th>View</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set total = 0 %}
+                {% if orders != null %}
+                    {% for item in orders %}
+                        {% set subtotal = 0 %}
+                        {% for od in item.OrderDetail %}
+                            {% set subtotal = subtotal + od.CurrentPrice * od.Quantity %}
+                        {% endfor %}
+                        <tr>
+                            <td>{{ item.CreateAt|date('d-m-Y') }}</td>
+                            <td>{{ subtotal }}</td>
+                            {% set total = total + subtotal %}
+                            <td><a class="btn btn-primary" href="{{ path('view_order', {'id': item.ID}) }}"><i class="fa fa-eye"> View</i></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+                <tr>
+                    <td>Total</td>
+                    <td>{{ total }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

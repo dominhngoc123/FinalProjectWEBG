@@ -60,6 +60,16 @@
                     </a>
                 </div>
             </th>
+            <th class="th-15">Status
+                <div class="sort-table-arrows">
+                    <a href="#" style="text-decoration: none;">
+                        <button class="button" title="Sort Ascending"><i class="fa fa-chevron-down"></i></button>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <button class="button" title="Sort Descending"><i class="fa fa-chevron-up"></i></button>
+                    </a>
+                </div>
+            </th>
             <th class="total">Total
             </th>
             <th class="th-15" style="text-align: center;">Action
@@ -73,7 +83,7 @@
                 <tr>
                     <td data-label="Order-Number" class="order-number">{{ orderNum }}</td>
                     {% set orderNum = orderNum + 1 %}
-                    <td data-label="Name" class="name">{{ order.User.UserFullName }}</td>
+                    <td data-label="Name" class="name"><a href="{{ path('view_history', {'id': order.User.ID}) }}">{{ order.User.UserFullName }}</a></td>
                     <td data-label="Transaction date" class="transaction-date">{{ order.CreateAt ? order.CreateAt|date('d-m-Y') : '' }}</td>
                     {% set total = 0 %}
                     {% if order.OrderDetail != null  %}
@@ -81,6 +91,7 @@
                             {% set total = total + od.CurrentPrice * od.Quantity %}
                         {% endfor %}
                     {% endif %}
+                    <td data-label="Status" class="th-15">{{ order.Status }}</td>
                     <td data-label="Total" class="total">{{ total }}</td>
                     <td data-label="Action" class="th-15" style="text-align: center;">
                         <a class="btn btn-primary" style="text-decoration: none;" href="{{ path('view_order', {'id': order.id}) }}"><i class="fa fa-eye"></i></a>

@@ -66,6 +66,16 @@
                  <!-- BEGIN CONTENT -->
                  <div class="col-md-12 col-sm-12">
                      <h1>Shopping cart</h1>
+                     {% for message in app.flashes('success') %}
+                         <div class="alert alert-success">
+                             {{ message }}
+                         </div>
+                     {% endfor %}
+                     {% for message in app.flashes('error') %}
+                         <div class="alert alert-danger">
+                             {{ message }}
+                         </div>
+                     {% endfor %}
                      <div class="goods-page">
                          <div class="goods-data clearfix">
                              <div class="table-wrapper-responsive">
@@ -137,7 +147,7 @@
                              </div>
                          </div>
                          <a class="btn btn-default" type="submit" href="{{path('home')}}">Continue shopping <i class="fa fa-shopping-cart"></i></a>
-                         <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
+                         <a class="btn btn-primary" type="submit" href="{{path('checkout')}}">Checkout <i class="fa fa-check"></i></a>
                      </div>
                  </div>
                  <!-- END CONTENT -->

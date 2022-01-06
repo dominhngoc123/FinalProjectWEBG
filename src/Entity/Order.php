@@ -50,6 +50,11 @@ class Order
      */
     private $OrderDetail;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $Status;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -147,6 +152,18 @@ class Order
                 $orderDetail->setOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(string $Status): self
+    {
+        $this->Status = $Status;
 
         return $this;
     }

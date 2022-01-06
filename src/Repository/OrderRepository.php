@@ -101,6 +101,30 @@ class OrderRepository extends ServiceEntityRepository
             ->setParameter('val', '%' . $searchContent . '%')
             ->getResult();
     }
+
+    public function getHistory($userID)
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT o
+                FROM App\Entity\Order o
+                WHERE o.User = :val
+            ")
+            ->setParameter('val', $userID)
+            ->getResult();
+    }
+
+    public function getOrderOverview()
+    {
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT u
+                FROM App\Entity\User u
+                JOIN App\Entity\Order o WITH o.User = u
+            ")
+            ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Order
     {
