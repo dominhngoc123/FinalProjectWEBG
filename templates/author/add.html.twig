@@ -46,14 +46,6 @@
             }}
         </div>
         <div class="form-group">
-            {{ form_label (authorForm.AuthorDescription)}}
-            {{ form_widget (authorForm.AuthorDescription ,
-                {
-                    'attr' : {'class' : 'form-control'}
-                })
-            }}
-        </div>
-        <div class="form-group">
             {{ form_label (authorForm.AuthorGender)}}
             {{ form_widget (authorForm.AuthorGender ,
                 {
@@ -69,6 +61,15 @@
                 })
             }}
         </div>
+        <div class="form-group">
+            {{ form_label (authorForm.AuthorDescription)}}
+            {{ form_widget (authorForm.AuthorDescription ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        
         <div class="form-group text-center mt-3">
             <input class="btn btn-primary" type="submit" value="Add" />
         </div>
