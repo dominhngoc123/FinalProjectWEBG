@@ -180,7 +180,8 @@ class AuthorController extends AbstractController
     {
         $authors = $repository->sortByNameDesc();
         return $this->render("author/index.html.twig", [
-            'authors' => $authors
+            'authors' => $authors,
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 
@@ -192,7 +193,8 @@ class AuthorController extends AbstractController
     {
         $authors = $repository->sortByNameAsc();
         return $this->render("author/index.html.twig", [
-            'authors' => $authors
+            'authors' => $authors,
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 
@@ -204,7 +206,8 @@ class AuthorController extends AbstractController
     {
         $authors = $repository->sortByStageNameDesc();
         return $this->render("author/index.html.twig", [
-            'authors' => $authors
+            'authors' => $authors,
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 
@@ -215,7 +218,8 @@ class AuthorController extends AbstractController
     {
         $authors = $repository->sortByStageNameAsc();
         return $this->render("author/index.html.twig", [
-            'authors' => $authors
+            'authors' => $authors,
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 
@@ -227,7 +231,8 @@ class AuthorController extends AbstractController
         $searchContent = $request->get('searchContent');
         $authors = $repository->findByAuthorNameOrStageName($searchContent);
         return $this->render("author/index.html.twig", [
-            'authors' => $authors
+            'authors' => $authors,
+            'currentyear'=> \DateTime::createFromFormat('Y', date('Y', time()))
         ]);
     }
 }

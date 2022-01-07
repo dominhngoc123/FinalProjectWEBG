@@ -22,7 +22,10 @@ class CartController extends AbstractController
     /**
      * @Route("/", name="view_cart")
      */
-    public function index(SessionInterface $session, BookRepository $bookRepository,CategoryRepository $categoryRepository, TypeRepository $typeRepository): Response
+    public function index(SessionInterface $session,
+                          BookRepository $bookRepository,
+                          CategoryRepository $categoryRepository,
+                          TypeRepository $typeRepository): Response
     {
         $cart = $session->get('cart', []);
         $populars = $bookRepository->getPopularProduct();
@@ -127,7 +130,12 @@ class CartController extends AbstractController
     /**
      * @Route("/checkout", name="checkout")
      */
-    public function checkout(SessionInterface $session, Request $request, BookRepository $bookRepository, UserRepository $userRepository, CategoryRepository $categoryRepository, TypeRepository $typeRepository): Response
+    public function checkout(SessionInterface $session,
+                             Request $request,
+                             BookRepository $bookRepository,
+                             UserRepository $userRepository,
+                             CategoryRepository $categoryRepository,
+                             TypeRepository $typeRepository): Response
     {
         $cart = $session->get('cart', []);
         $populars = $bookRepository->getPopularProduct();
@@ -144,7 +152,8 @@ class CartController extends AbstractController
             $user = $userRepository->find($security->getUser()->getID());
             $order->setUser($user);
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $order->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time())));
+            $order->setCreateAt(\DateTime::createFromFormat('Y-m-d H:i:s',
+                date('Y-m-d H:i:s', time())));
             $order->setCreateBy($security->getUser()->getUserFullName());
             $order->setStatus("PENDING");
             $manager = $this->getDoctrine()->getManager();

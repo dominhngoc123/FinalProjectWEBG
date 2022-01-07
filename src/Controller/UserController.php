@@ -46,7 +46,8 @@ class UserController extends AbstractController
             $user->setUsername($form->get('username')->getData());
             $user->setUserFullName($form->get('user_full_name')->getData());
             $user->setUserAddress($form->get('user_address')->getData());
-            $user->setUserDOB(\DateTime::createFromFormat('Y-m-d', $form->get('user_DOB')->getData()->format('Y-m-d')));
+            $user->setUserDOB(\DateTime::createFromFormat('Y-m-d',
+                $form->get('user_DOB')->getData()->format('Y-m-d')));
             $user->setUserEmail($form->get('user_email')->getData());
             $user->setUserPhone($form->get('user_phone')->getData());
             $user->setPassword(
