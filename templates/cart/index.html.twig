@@ -1,3 +1,4 @@
+{% if app.user != null %}
 {% extends 'clientBase.html.twig' %}
 {% block title %}List Products{% endblock %}
 {% block navigation %}
@@ -189,3 +190,9 @@
  {% endblock %}
  {% block twoItem %}
  {% endblock %}
+{% else %}
+    <script>
+        alert("You have to login to continue shopping");
+        window.location.href = "../login";
+    </script>
+{% endif %}

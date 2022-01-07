@@ -1,4 +1,3 @@
-{% if app.user != null %}
 <!DOCTYPE html>
 <!--[if !IE]><!-->
 <html lang="en">
@@ -992,9 +991,3 @@
 </body>
 <!-- END BODY -->
 </html>
-{% else %}
-  <script>
-    alert("You have to login to continue shopping");
-    window.location.href = "../login";
-  </script>
-{% endif %}
