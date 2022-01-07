@@ -46,6 +46,22 @@
             }}
         </div>
         <div class="form-group">
+            {{ form_label (authorForm.AuthorGender)}}
+            {{ form_widget (authorForm.AuthorGender ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        <div class="form-group">
+            {{ form_label (authorForm.AuthorDOB)}}
+            {{ form_widget (authorForm.AuthorDOB ,
+                {
+                    'attr' : {'class' : 'form-control'}
+                })
+            }}
+        </div>
+        <div class="form-group">
             {{ form_label (authorForm.AuthorDescription)}}
             {{ form_widget (authorForm.AuthorDescription ,
                 {
